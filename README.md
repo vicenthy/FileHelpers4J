@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 What is JFileHelpers?
 ---------------------
 
@@ -245,3 +246,7 @@ public class OrdersVerticalBar {
 
 }
 ```
+=======
+# FileHelpers4J
+Repositório Fork do projeto https://github.com/fcoury/jfilehelpers com intuito de adicão de novas features
+>>>>>>> 415da1f1a96b2b1088f43013f500057ec83ddb74
