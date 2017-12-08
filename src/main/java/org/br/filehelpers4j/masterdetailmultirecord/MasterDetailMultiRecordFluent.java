@@ -28,7 +28,7 @@ public interface MasterDetailMultiRecordFluent {
 	public <T> MasterDetailMultiRecordFluent addHeaderFile(Class<T> clazz, RecordActionSelector action);
 	public <T> MasterDetailMultiRecordFluent addHeaderTransaction(Class<T> clazz,RecordActionSelector action);
 	public <T> MasterDetailMultiRecordFluent addMaster(Class<T> clazz,RecordActionSelector action);
-	public <T> MasterDetailMultiRecordFluent addDetail(Class<T> clazz,RecordActionSelector action);
+	public <T> MasterDetailMultiRecordFluent addDetail(Class<T> clazz, RecordActionSelector action);
 	public <T> MasterDetailMultiRecordFluent addTraillerTransaction(Class<T> clazz,RecordActionSelector action);
 	public <T> MasterDetailMultiRecordFluent addTraillerFile(Class<T> clazz,RecordActionSelector action);
 	public Map<Class<?>, RecordActionSelector> getMapper();

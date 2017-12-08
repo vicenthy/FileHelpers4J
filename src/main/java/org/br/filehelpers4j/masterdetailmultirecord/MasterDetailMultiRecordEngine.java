@@ -59,12 +59,11 @@ public class MasterDetailMultiRecordEngine {
 	private Map<Object, List<?>> masterDetailMultiRecod;
 	private FileWriter fw;
 	private BufferedWriter writer;
-    
-    private BeforeReadRecordHandler<?> beforeReadRecordHandler;
-    private AfterReadRecordHandler<?> afterReadRecordHandler;
-    private BeforeWriteRecordHandler<?> beforeWriteRecordHandler;
-    private AfterWriteRecordHandler<?> afterWriteRecordHandler;
 
+	private BeforeReadRecordHandler<?> beforeReadRecordHandler;
+	private AfterReadRecordHandler<?> afterReadRecordHandler;
+	private BeforeWriteRecordHandler<?> beforeWriteRecordHandler;
+	private AfterWriteRecordHandler<?> afterWriteRecordHandler;
 
 	public MasterDetailMultiRecordEngine(MasterDetailMultiRecordFluent fluent) {
 		this.fluent = fluent;
@@ -89,13 +88,14 @@ public class MasterDetailMultiRecordEngine {
 				startNewRegister(line, entry.getKey());
 				break;
 			case Master:
+				finallyRegister(line, entry.getKey());
 				processMaster(line, entry.getKey());
 				break;
 			case Detail:
 				processDetail(line, entry.getKey());
 				break;
 			case TraillerTransaction:
-				finallyRegiter(line, entry.getKey());
+				finallyRegister(line, entry.getKey());
 				break;
 			case TraillerFile:
 				break;
@@ -110,28 +110,30 @@ public class MasterDetailMultiRecordEngine {
 		return masterDetailMultiRecod;
 	}
 
-	private void finallyRegiter(String line, Class<?> clazz) {
+	private void finallyRegister(String line, Class<?> clazz) {
 
 		if (master != null && details.size() > 0) {
+				masterDetailMultiRecod.put(master, details);
+		}else if(master != null) {
 			masterDetailMultiRecod.put(master, details);
 		}
+			master = null;
+			details = new ArrayList<>();
 
-		master = null;
-		details = new ArrayList<>();
 	}
+
 
 	private void startNewRegister(String line, Class<?> clazz) {
 
 	}
 
 	private void processDetail(String line, Class<?> clazz) {
-		try {
-			details.add(parseStrToRecord(clazz, line));
-		} catch (InstantiationException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+				try {
+					details.add(parseStrToRecord(clazz, line));
+				} catch (InstantiationException | IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	}
 
 	private void processMaster(String line, Class<?> clazz) {
@@ -166,13 +168,12 @@ public class MasterDetailMultiRecordEngine {
 		}
 		return result;
 	}
-	
-	
+
 	public Map<Object, List<?>> readResource(String fileName) throws IOException {
 		Map<Object, List<?>> result;
-        Reader r = null;
+		Reader r = null;
 		try {
-            r = new InputStreamReader(getClass().getResourceAsStream(fileName));
+			r = new InputStreamReader(getClass().getResourceAsStream(fileName));
 			result = readStream(r);
 		} finally {
 			if (r != null) {
@@ -181,8 +182,6 @@ public class MasterDetailMultiRecordEngine {
 		}
 		return result;
 	}
-	
-	
 
 	public void writeFile(String fileName, Map<Object, List<?>> records, int maxRecords) throws IOException {
 		try {
@@ -201,16 +200,14 @@ public class MasterDetailMultiRecordEngine {
 
 	public <T> void writeLine(Class<?> clazz, T obj) {
 		try {
-				writer.write(parseRecordToStr(obj, clazz) + StringHelper.NEW_LINE);
-				writer.flush();
+			writer.write(parseRecordToStr(obj, clazz) + StringHelper.NEW_LINE);
+			writer.flush();
 		} catch (IOException | IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
 	}
 
-	
-	
-	private void writeStream( Map<Object, List<?>> records, int maxRecords) throws IOException {
+	private void writeStream(Map<Object, List<?>> records, int maxRecords) throws IOException {
 		records.forEach((master, details) -> {
 			try {
 				writeLine(master.getClass(), master);
@@ -236,46 +233,41 @@ public class MasterDetailMultiRecordEngine {
 			fw.close();
 		}
 	}
-	
-	
-	
 
-    public <T> void setBeforeReadRecordHandler(BeforeReadRecordHandler<T> beforeReadRecordHandler) {
-        this.beforeReadRecordHandler = beforeReadRecordHandler;
-    }
+	public <T> void setBeforeReadRecordHandler(BeforeReadRecordHandler<T> beforeReadRecordHandler) {
+		this.beforeReadRecordHandler = beforeReadRecordHandler;
+	}
 
-    public <T> void setAfterReadRecordHandler(AfterReadRecordHandler<T> afterReadRecordHandler) {
-        this.afterReadRecordHandler = afterReadRecordHandler;
-    }
+	public <T> void setAfterReadRecordHandler(AfterReadRecordHandler<T> afterReadRecordHandler) {
+		this.afterReadRecordHandler = afterReadRecordHandler;
+	}
 
-    public <T> void setBeforeWriteRecordHandler(BeforeWriteRecordHandler<T> beforeWriteRecordHandler) {
-        this.beforeWriteRecordHandler = beforeWriteRecordHandler;
-    }
+	public <T> void setBeforeWriteRecordHandler(BeforeWriteRecordHandler<T> beforeWriteRecordHandler) {
+		this.beforeWriteRecordHandler = beforeWriteRecordHandler;
+	}
 
-    public <T> void setAfterWriteRecordHandler(AfterWriteRecordHandler<T> afterWriteRecordHandler) {
-        this.afterWriteRecordHandler = afterWriteRecordHandler;
-    }
+	public <T> void setAfterWriteRecordHandler(AfterWriteRecordHandler<T> afterWriteRecordHandler) {
+		this.afterWriteRecordHandler = afterWriteRecordHandler;
+	}
 
-    private <T> boolean onBeforeReadRecord(BeforeReadRecordEventArgs<T> e) {
-        return false;
-    }
+	private <T> boolean onBeforeReadRecord(BeforeReadRecordEventArgs<T> e) {
+		return false;
+	}
 
-    @SuppressWarnings("unchecked")
-    private <T> boolean onAfterReadRecord(String line, T record) {
-        return false;
-    }
+	@SuppressWarnings("unchecked")
+	private <T> boolean onAfterReadRecord(String line, T record) {
+		return false;
+	}
 
-    @SuppressWarnings("unchecked")
-    private <T> boolean onBeforeWriteRecord(T record, RecordInfo<T> recordInfo) {
-    	return false;
-    }
+	@SuppressWarnings("unchecked")
+	private <T> boolean onBeforeWriteRecord(T record, RecordInfo<T> recordInfo) {
+		return false;
+	}
 
-    private <T> String onAfterWriteRecord(String line, T record) {
-    	return line;
-    }
+	private <T> String onAfterWriteRecord(String line, T record) {
+		return line;
+	}
 
-	
-	
 	public <T> T parseStrToRecord(Class<T> clazz, String text) throws InstantiationException, IllegalAccessException {
 		return new RecordInfo<T>(clazz).strToRecord(new LineInfo(text));
 	}
