@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package org.br.filehelpers4j.tests.types.multirecord;
-
+import org.br.filehelpers4j.annotations.Seletor;
 import java.io.Serializable;
 
 import org.br.filehelpers4j.annotations.FieldFixedLength;
@@ -26,8 +26,10 @@ import org.br.filehelpers4j.annotations.FieldIgnored;
 import org.br.filehelpers4j.annotations.FieldOptional;
 import org.br.filehelpers4j.annotations.FixedLengthRecord;
 import org.br.filehelpers4j.enums.FixedMode;
+import org.br.filehelpers4j.masterdetail.RecordAction;
 
 @FixedLengthRecord(fixedMode= FixedMode.AllowVariableLength)
+@Seletor(token="OBM1", type=RecordAction.Master)
 public class ObraMusicalHelper implements Serializable{
 
 	

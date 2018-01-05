@@ -20,5 +20,5 @@
 package org.br.filehelpers4j.masterdetail;
 
 public enum RecordAction {
-	HeaderFile,HeaderTransaction, Skip, Master, Detail, TraillerTransaction,TraillerFile;
+	HeaderFile,HeaderTransaction, Skip, Master, Detail, MasterDetail,SubDetail, TraillerTransaction,TraillerFile;
 }

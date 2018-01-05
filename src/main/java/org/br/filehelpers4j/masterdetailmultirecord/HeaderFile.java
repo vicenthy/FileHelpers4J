@@ -1,5 +1,5 @@
 /*
- * TraillerFile.java
+ * HeaderFile.java
  *
  * Copyright (C) 2007 Felipe Gonçalves Coury <felipe.coury@gmail.com>
  * 
@@ -17,8 +17,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package org.br.filehelpers4j.tests.types.multirecord;
+package org.br.filehelpers4j.masterdetailmultirecord;
 
-public class TraillerFile {
+import org.br.filehelpers4j.annotations.Seletor;
+import org.br.filehelpers4j.masterdetail.RecordAction;
+
+@Seletor(token="CMP9TIT0", type=RecordAction.HeaderFile)
+public class HeaderFile {
 
 }

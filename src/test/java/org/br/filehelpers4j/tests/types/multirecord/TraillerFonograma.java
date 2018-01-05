@@ -19,6 +19,10 @@
  */
 package org.br.filehelpers4j.tests.types.multirecord;
 
+import org.br.filehelpers4j.annotations.Seletor;
+import org.br.filehelpers4j.masterdetail.RecordAction;
+
+@Seletor(token="9FON", type=RecordAction.TraillerTransaction)
 public class TraillerFonograma {
 
 }

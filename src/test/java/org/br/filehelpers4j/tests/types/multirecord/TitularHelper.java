@@ -25,9 +25,12 @@ import org.br.filehelpers4j.annotations.FieldFixedLength;
 import org.br.filehelpers4j.annotations.FieldIgnored;
 import org.br.filehelpers4j.annotations.FieldOptional;
 import org.br.filehelpers4j.annotations.FixedLengthRecord;
+import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.enums.FixedMode;
+import org.br.filehelpers4j.masterdetail.RecordAction;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowLessChars)
+@Seletor(token="TIT1", type=RecordAction.Master)
 public class TitularHelper implements Serializable{
 
 	/**

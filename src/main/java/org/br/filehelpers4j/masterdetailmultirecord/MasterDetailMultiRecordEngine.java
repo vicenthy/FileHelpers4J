@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -35,6 +36,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
+import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.core.RecordInfo;
 import org.br.filehelpers4j.engines.LineInfo;
 import org.br.filehelpers4j.events.AfterReadRecordEventArgs;
@@ -56,6 +58,9 @@ public class MasterDetailMultiRecordEngine {
 	private MasterDetailMultiRecordFluent fluent;
 	private Object master;
 	private List<Object> details;
+	private Object masterdetail;
+	private List<Object> subdetails;
+	private Map<Object, List<?>> masterDetailSubDetail;
 	private Map<Object, List<?>> masterDetailMultiRecod;
 	private FileWriter fw;
 	private BufferedWriter writer;
@@ -68,72 +73,134 @@ public class MasterDetailMultiRecordEngine {
 	public MasterDetailMultiRecordEngine(MasterDetailMultiRecordFluent fluent) {
 		this.fluent = fluent;
 		masterDetailMultiRecod = new LinkedHashMap<>();
+		masterDetailSubDetail = new LinkedHashMap<>();
 		details = new ArrayList<>();
-
+		subdetails = new ArrayList<>();
 	}
 
 	private Map<Object, List<?>> readStream(Reader fileReader) {
 		BufferedReader reader = new BufferedReader(fileReader);
 		reader.lines().forEach(line -> {
 			RecordAction action = RecordAction.Skip;
-			Entry<Class<?>, RecordActionSelector> entry = checkRegisterType(line);
+			Class<?> entry = checkRegisterType(line);
 			if (entry != null) {
-				action = entry.getValue().getRecordAction(line);
+				action = getCurrentRecorAction(entry);
 			}
-
 			switch (action) {
-			case HeaderFile:
-				break;
 			case HeaderTransaction:
-				startNewRegister(line, entry.getKey());
+				processHeaderTransaction(line, entry);
 				break;
 			case Master:
-				finallyRegister(line, entry.getKey());
-				processMaster(line, entry.getKey());
+				finallyRegisterMasterDetail(line, entry);
+				finallyRegister(line, entry);
+				processMaster(line, entry);
+				break;
+			case MasterDetail:
+				finallyRegisterMasterDetail(line, entry);
+				processMasterDetail(line, entry);
+				break;
+			case SubDetail:
+				processSubDetail(line, entry);
 				break;
 			case Detail:
-				processDetail(line, entry.getKey());
+				processDetail(line, entry);
 				break;
 			case TraillerTransaction:
-				finallyRegister(line, entry.getKey());
-				break;
-			case TraillerFile:
+				processTraillerTransaction(line, entry);
 				break;
 			case Skip:
-
+				verifyHeaderOrFooter(line);
+				break;
 			default:
 				break;
 			}
 
 		});
-
 		return masterDetailMultiRecod;
 	}
 
-	private void finallyRegister(String line, Class<?> clazz) {
+	private void processSubDetail(String line, Class<?> entry) {
+		try {
+			subdetails.add(parseStrToRecord(entry, line));
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+		}	}
 
-		if (master != null && details.size() > 0) {
-				masterDetailMultiRecod.put(master, details);
-		}else if(master != null) {
-			masterDetailMultiRecod.put(master, details);
+	private void processMasterDetail(String line, Class<?> entry) {
+		try {
+			masterdetail = parseStrToRecord(entry, line);
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-			master = null;
-			details = new ArrayList<>();
+		
+	}
+
+	private void verifyHeaderOrFooter(String line) {
+		if (existsHeaderAndFooter()) {
+			if (line.equalsIgnoreCase(extractedAnnotation(fluent.getHeaderFile()).token())) {
+
+			}
+			if (line.equalsIgnoreCase(extractedAnnotation(fluent.getFooterFile()).token())) {
+				finallyRegister(line, fluent.getFooterFile());
+			}
+		}
+	}
+
+	private boolean existsHeaderAndFooter() {
+		if(fluent.getFooterFile() != null && fluent.getHeaderFile() != null) {
+				if(extractedAnnotation(fluent.getHeaderFile()) != null && extractedAnnotation(fluent.getFooterFile()) != null) {
+					return true;
+				}else {
+					throw new RuntimeException("Não foi possível localizar as anotações de header e footer");
+				}
+		}else {
+			throw new RuntimeException("Não foi possível localizar um header e um footer ");
+		}
+	}
+
+	private void processTraillerTransaction(String line, Class<?> entry) {
 
 	}
 
+	private RecordAction getCurrentRecorAction(Class<?> entry) {
+		return extractedAnnotation(entry).type();
+	}
 
-	private void startNewRegister(String line, Class<?> clazz) {
+	private void finallyRegister(String line, Class<?> clazz) {
+		if (master != null && details.size() > 0) {
+			masterDetailMultiRecod.put(master, details);
+		} else if (master != null) {
+			masterDetailMultiRecod.put(master, details);
+		}
+		master = null;
+		details = new ArrayList<>();
+	}
+
+	
+	private void finallyRegisterMasterDetail(String line, Class<?> clazz) {
+		if (masterdetail != null && subdetails.size() > 0) {
+			masterDetailSubDetail.put(masterdetail, subdetails);
+			details.add(masterDetailSubDetail);
+		} else if (masterdetail != null) {
+			masterDetailSubDetail.put(masterdetail, subdetails);
+			details.add(masterDetailSubDetail);
+		}
+		masterdetail = null;
+		subdetails = new ArrayList<>();
+	}
+	
+	private void processHeaderTransaction(String line, Class<?> clazz) {
 
 	}
 
 	private void processDetail(String line, Class<?> clazz) {
-				try {
-					details.add(parseStrToRecord(clazz, line));
-				} catch (InstantiationException | IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		try {
+			details.add(parseStrToRecord(clazz, line));
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void processMaster(String line, Class<?> clazz) {
@@ -145,14 +212,23 @@ public class MasterDetailMultiRecordEngine {
 		}
 	}
 
-	private Entry<Class<?>, RecordActionSelector> checkRegisterType(String line) {
+	private Class<?> checkRegisterType(String line) {
 		try {
-			return fluent.getMapper().entrySet().stream()
-					.filter(action -> action.getValue().getRecordAction(line) != RecordAction.Skip).findFirst().get();
+			return fluent.getMapper().stream()
+					.filter(a -> extractedAnnotation(a) != null && line.contains(extractedAnnotation(a).token()))
+					.findFirst().get();
 		} catch (NoSuchElementException e) {
 			return null;
 		}
 
+	}
+
+	private Seletor extractedAnnotation(Class<?> klass) {
+		if (klass.isAnnotationPresent(Seletor.class)) {
+			return klass.getAnnotation(Seletor.class);
+		} else {
+			return null;
+		}
 	}
 
 	public Map<Object, List<?>> readFile(String fileName) throws IOException {

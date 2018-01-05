@@ -19,20 +19,20 @@
  */
 package org.br.filehelpers4j.masterdetailmultirecord;
 
+import java.util.List;
 import java.util.Map;
 
 import org.br.filehelpers4j.masterdetail.RecordActionSelector;
 
 public interface MasterDetailMultiRecordFluent {
 
-	public <T> MasterDetailMultiRecordFluent addHeaderFile(Class<T> clazz, RecordActionSelector action);
-	public <T> MasterDetailMultiRecordFluent addHeaderTransaction(Class<T> clazz,RecordActionSelector action);
-	public <T> MasterDetailMultiRecordFluent addMaster(Class<T> clazz,RecordActionSelector action);
-	public <T> MasterDetailMultiRecordFluent addDetail(Class<T> clazz, RecordActionSelector action);
-	public <T> MasterDetailMultiRecordFluent addTraillerTransaction(Class<T> clazz,RecordActionSelector action);
-	public <T> MasterDetailMultiRecordFluent addTraillerFile(Class<T> clazz,RecordActionSelector action);
-	public Map<Class<?>, RecordActionSelector> getMapper();
-	public void setMapper(Map<Class<?>, RecordActionSelector> mapper);
+	public <T> MasterDetailMultiRecordFluent addMapperFile(Class<T> clazz);
+	public List<Class<?>> getMapper();
+	public void setMapper(List<Class<?>> mapper);
+	public Class<?> getFooterFile();
+	public Class<?> getHeaderFile();
+	
+	
 	
 	
 }

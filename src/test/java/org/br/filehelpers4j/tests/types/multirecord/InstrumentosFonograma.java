@@ -24,9 +24,12 @@ import java.io.Serializable;
 import org.br.filehelpers4j.annotations.FieldFixedLength;
 import org.br.filehelpers4j.annotations.FieldIgnored;
 import org.br.filehelpers4j.annotations.FixedLengthRecord;
+import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.enums.FixedMode;
+import org.br.filehelpers4j.masterdetail.RecordAction;
 
 @FixedLengthRecord(fixedMode=FixedMode.AllowLessChars)
+@Seletor(token="FON3", type=RecordAction.Detail)
 public class InstrumentosFonograma implements Serializable{
 	
 	/**

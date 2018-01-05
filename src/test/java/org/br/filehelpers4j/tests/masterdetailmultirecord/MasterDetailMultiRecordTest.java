@@ -28,9 +28,12 @@ import java.util.Map;
 
 import org.br.filehelpers4j.masterdetail.RecordAction;
 import org.br.filehelpers4j.masterdetail.RecordActionSelector;
+import org.br.filehelpers4j.masterdetailmultirecord.HeaderFile;
 import org.br.filehelpers4j.masterdetailmultirecord.MasterDetailMultiRecordEngine;
 import org.br.filehelpers4j.masterdetailmultirecord.MasterDetailMultiRecordFluentImplement;
+import org.br.filehelpers4j.masterdetailmultirecord.TraillerFile;
 import org.br.filehelpers4j.tests.types.multirecord.Fonograma;
+import org.br.filehelpers4j.tests.types.multirecord.FonogramaMasterDetail;
 import org.br.filehelpers4j.tests.types.multirecord.HeaderFonograma;
 import org.br.filehelpers4j.tests.types.multirecord.HeaderObra;
 import org.br.filehelpers4j.tests.types.multirecord.HeaderTitular;
@@ -41,6 +44,8 @@ import org.br.filehelpers4j.tests.types.multirecord.PseudonimoHelper;
 import org.br.filehelpers4j.tests.types.multirecord.SubTitulo;
 import org.br.filehelpers4j.tests.types.multirecord.TitularHelper;
 import org.br.filehelpers4j.tests.types.multirecord.TitularesFonograma;
+import org.br.filehelpers4j.tests.types.multirecord.TitularesFonogramaSubDetail1;
+import org.br.filehelpers4j.tests.types.multirecord.TitularesFonogramaSubDetail2;
 import org.br.filehelpers4j.tests.types.multirecord.TitularesObra;
 import org.br.filehelpers4j.tests.types.multirecord.TraillerFonograma;
 import org.br.filehelpers4j.tests.types.multirecord.TraillerObra;
@@ -63,24 +68,30 @@ public class MasterDetailMultiRecordTest extends TestCase {
 	
 		mapa = new MasterDetailMultiRecordFluentImplement();
 		//Titulares
-		mapa
-		.addHeaderTransaction(HeaderTitular.class, setSelector("0TIT", RecordAction.HeaderTransaction))
-		.addMaster(TitularHelper.class, setSelector("TIT1", RecordAction.Master))
-		.addDetail(LocalizacaoEDocumentacaoHelper.class, setSelector("TIT2", RecordAction.Detail))
-		.addDetail(PseudonimoHelper.class, setSelector("TIT4", RecordAction.Detail))
-		.addTraillerTransaction(TraillerTitular.class, setSelector("9TIT", RecordAction.TraillerTransaction))
+		mapa.addMapperFile(HeaderTitular.class)
+		.addMapperFile(TitularHelper.class)
+		.addMapperFile(LocalizacaoEDocumentacaoHelper.class)
+		.addMapperFile(PseudonimoHelper.class)
+		.addMapperFile(TraillerTitular.class)
 		//Obra
-		.addHeaderTransaction(HeaderObra.class, setSelector("0OBM", RecordAction.HeaderTransaction))
-		.addMaster(ObraMusicalHelper.class, setSelector("OBM1", RecordAction.Master))
-		.addDetail(TitularesObra.class, setSelector("OBM2", RecordAction.Detail))
-		.addDetail(SubTitulo.class, setSelector("OBM3", RecordAction.Detail))
-		.addTraillerTransaction(TraillerObra.class, setSelector("9OBM", RecordAction.TraillerTransaction))
+		.addMapperFile(HeaderObra.class)
+		.addMapperFile(ObraMusicalHelper.class)
+		.addMapperFile(TitularesObra.class)
+		.addMapperFile(SubTitulo.class)
+		.addMapperFile(TraillerObra.class)
 		//Fonograma
-		.addHeaderTransaction(HeaderFonograma.class, setSelector("0FON", RecordAction.HeaderTransaction))
-		.addMaster(Fonograma.class, setSelector("FON1", RecordAction.Master))
-		.addDetail(TitularesFonograma.class, setSelector("FON2", RecordAction.Detail))
-		.addDetail(InstrumentosFonograma.class, setSelector("FON3", RecordAction.Detail))
-		.addTraillerTransaction(TraillerFonograma.class, setSelector("9FON", RecordAction.TraillerTransaction));
+		.addMapperFile(HeaderFonograma.class)
+		.addMapperFile(FonogramaMasterDetail.class)
+		.addMapperFile(TitularesFonogramaSubDetail1.class)
+		.addMapperFile(TitularesFonogramaSubDetail2.class)
+		.addMapperFile(Fonograma.class)
+		.addMapperFile(TitularesFonograma.class)
+		.addMapperFile(InstrumentosFonograma.class)
+		.addMapperFile(TraillerFonograma.class);
+	
+		mapa.setFooterFile(TraillerFile.class);
+		mapa.setHeaderFile(HeaderFile.class);
+		
 		engine = new MasterDetailMultiRecordEngine(mapa);
 		file = new File(BASEDIR + "masterdetailmultirecord-result.txt");
 		if(file.exists()){
@@ -88,8 +99,9 @@ public class MasterDetailMultiRecordTest extends TestCase {
 		}
 	}
 	
-	public void testLeituraArquivoDeLayout() throws Exception {
+	public void testLeituraArquivoDeLayoutPadrao() throws Exception {
 		result = engine.readFile(BASEDIR + "masterdetailmultirecord-example.txt");
+		//quantidade de registros do tipo master
 		assertEquals(6, result.keySet().size());
 		assertEquals(2, result.get(result.keySet().toArray()[0]).size());
 		assertEquals(2, result.get(result.keySet().toArray()[1]).size());
@@ -97,8 +109,23 @@ public class MasterDetailMultiRecordTest extends TestCase {
 		assertEquals(3, result.get(result.keySet().toArray()[3]).size());
 		assertEquals(3, result.get(result.keySet().toArray()[4]).size());
 		assertEquals(13,result.get(result.keySet().toArray()[5]).size());
+		
 	}
 
+	
+	public void testLeituraArquivoDeLayoutMasterDetailSubDetail() throws Exception {
+		result = engine.readFile(BASEDIR + "masterdetailmultirecord-example-2.txt");
+		//quantidade de registros do tipo master
+		assertTrue(result.size() > 0);
+		assertEquals(7, result.keySet().size());
+		assertEquals(6,result.get(result.keySet().toArray()[6]).size());
+		assertEquals(12,result.get(result.keySet().toArray()[5]).size());
+		
+		result.get(result.keySet().toArray()[5]).forEach(a -> {
+			System.out.println(a);
+		});
+		
+	}
 	
 	
 	
@@ -115,17 +142,5 @@ public class MasterDetailMultiRecordTest extends TestCase {
 
 		
 	}
-	
-	private RecordActionSelector setSelector(String token, RecordAction action) {
-		return new RecordActionSelector() {
-			@Override
-			public RecordAction getRecordAction(String recordString) {
-				if(recordString.contains(token))
-				return action;
-			return RecordAction.Skip;
-			}
-		};
-	}
-	
 	
 }

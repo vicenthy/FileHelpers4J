@@ -19,7 +19,10 @@
  */
 package org.br.filehelpers4j.masterdetailmultirecord;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.br.filehelpers4j.masterdetail.RecordActionSelector;
@@ -27,62 +30,48 @@ import org.br.filehelpers4j.masterdetail.RecordActionSelector;
 public class MasterDetailMultiRecordFluentImplement implements MasterDetailMultiRecordFluent{
 
 	
-	private Map<Class<?>, RecordActionSelector> mapper;
+	private List<Class<?>> mapper;
+	private Class<?> headerFile;
+	private Class<?> footerFile;
 	
 	
 	public MasterDetailMultiRecordFluentImplement() {
-		mapper = new LinkedHashMap<>();
+		mapper = new ArrayList<>();
 	}
 	
-	@Override
-	public <T> MasterDetailMultiRecordFluent addHeaderFile(Class<T> clazz, RecordActionSelector action) {
-			mapper.put(clazz, action);
-		return this;
-	}
-
-	@Override
-	public <T> MasterDetailMultiRecordFluent addHeaderTransaction(Class<T> clazz, RecordActionSelector action) {
-		mapper.put(clazz, action);
-		return this;
-	}
-
-	@Override
-	public <T> MasterDetailMultiRecordFluent addMaster(Class<T> clazz,RecordActionSelector action) {
-		mapper.put(clazz, action);
-		return this;
-	}
-
-	@Override
-	public <T> MasterDetailMultiRecordFluent addDetail(Class<T> clazz,RecordActionSelector action) {
-		mapper.put(clazz, action);
-		return this;
-	}
-
-	@Override
-	public <T> MasterDetailMultiRecordFluent addTraillerTransaction(Class<T> clazz,RecordActionSelector action) {
-		mapper.put(clazz, action);
-		return this;
-	}
-
-	@Override
-	public <T> MasterDetailMultiRecordFluent addTraillerFile(Class<T> clazz, RecordActionSelector action) {
-		mapper.put(clazz, action);
-		return this;
-	}
-
-	public Map<Class<?>, RecordActionSelector> getMapper() {
+	public List<Class<?>> getMapper() {
 		return mapper;
 	}
 
-	public void setMapper(Map<Class<?>, RecordActionSelector> mapper) {
-		this.mapper = mapper;
+
+	@Override
+	public <T> MasterDetailMultiRecordFluent addMapperFile(Class<T> clazz) {
+		mapper.add(clazz);
+		return this;
 	}
 
 	
-	
-	
-	
-	
+	@Override
+	public void setMapper(List<Class<?>> mapper) {
+		this.mapper = mapper;
+	}
+
+	public Class<?> getHeaderFile() {
+		return headerFile;
+	}
+
+	public void setHeaderFile(Class<?> headerFile) {
+		this.headerFile = headerFile;
+	}
+
+	public Class<?> getFooterFile() {
+		return footerFile;
+	}
+
+	public void setFooterFile(Class<?> footerFile) {
+		this.footerFile = footerFile;
+	}
+
 	
 	
 	

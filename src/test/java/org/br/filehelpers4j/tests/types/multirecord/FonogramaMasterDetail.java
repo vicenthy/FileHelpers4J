@@ -30,8 +30,8 @@ import org.br.filehelpers4j.enums.FixedMode;
 import org.br.filehelpers4j.masterdetail.RecordAction;
 
 @FixedLengthRecord(fixedMode=FixedMode.AllowLessChars)
-@Seletor(token="FON1", type=RecordAction.Master)
-public class Fonograma implements Serializable{
+@Seletor(token="FON7", type=RecordAction.MasterDetail)
+public class FonogramaMasterDetail implements Serializable{
 
 	/**
 	 * 
@@ -110,7 +110,7 @@ public class Fonograma implements Serializable{
 	
 	
 	
-	public Fonograma() {
+	public FonogramaMasterDetail() {
 
 
 	}
