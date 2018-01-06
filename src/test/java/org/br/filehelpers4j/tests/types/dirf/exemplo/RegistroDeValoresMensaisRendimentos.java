@@ -1,11 +1,17 @@
 package org.br.filehelpers4j.tests.types.dirf.exemplo;
 
 import org.br.filehelpers4j.annotations.DelimitedRecord;
+import org.br.filehelpers4j.annotations.FieldNullValue;
+import org.br.filehelpers4j.annotations.Seletor;
+import org.br.filehelpers4j.masterdetail.RecordAction;
 
 
 @DelimitedRecord("|")
-public class RegistroDeValoresMensais {
+@Seletor(token="RTRT", type=RecordAction.SubDetail)
+public class RegistroDeValoresMensaisRendimentos {
 
+	
+	@FieldNullValue("RTRT")
 	private String identificadorDoRegistro;
 	private String janeiro;
 	private String fevereiro;
@@ -22,7 +28,7 @@ public class RegistroDeValoresMensais {
 	private String decimoTerceiro;
 	
 	
-	public RegistroDeValoresMensais() {
+	public RegistroDeValoresMensaisRendimentos() {
 		// TODO Auto-generated constructor stub
 	}
 

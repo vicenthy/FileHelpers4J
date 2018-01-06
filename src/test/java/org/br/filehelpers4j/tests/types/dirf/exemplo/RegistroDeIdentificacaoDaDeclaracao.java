@@ -1,11 +1,11 @@
 package org.br.filehelpers4j.tests.types.dirf.exemplo;
 
 import org.br.filehelpers4j.annotations.DelimitedRecord;
-import org.br.filehelpers4j.annotations.FieldDelimiter;
 import org.br.filehelpers4j.annotations.FieldNullValue;
 import org.br.filehelpers4j.annotations.FieldOptional;
 import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.masterdetail.RecordAction;
+import org.br.filehelpers4j.masterdetail.SelectorString;
 
 /**
  * 
@@ -14,12 +14,12 @@ import org.br.filehelpers4j.masterdetail.RecordAction;
  *   REGISTRO  - DIRF (cabeçalho)
  */
 @DelimitedRecord("|")
-@Seletor(token="DIRF", type=RecordAction.HeaderFile)
+@Seletor(token="Dirf", type=RecordAction.HeaderFile, seletorString=SelectorString.StarWith)
 public class RegistroDeIdentificacaoDaDeclaracao {
 
 	
 	
-	@FieldNullValue("DIRF")
+	@FieldNullValue("Dirf")
 	private String identificadorDoRegistro;
 	private Integer anoReferencia;
 	private Integer anoCalendario;

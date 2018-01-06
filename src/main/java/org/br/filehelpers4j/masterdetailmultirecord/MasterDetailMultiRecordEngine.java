@@ -69,6 +69,8 @@ public class MasterDetailMultiRecordEngine {
 	private AfterReadRecordHandler<?> afterReadRecordHandler;
 	private BeforeWriteRecordHandler<?> beforeWriteRecordHandler;
 	private AfterWriteRecordHandler<?> afterWriteRecordHandler;
+	private Object footer;
+	private Object header;
 
 	public MasterDetailMultiRecordEngine(MasterDetailMultiRecordFluent fluent) {
 		this.fluent = fluent;
@@ -137,15 +139,38 @@ public class MasterDetailMultiRecordEngine {
 	}
 
 	private void verifyHeaderOrFooter(String line) {
-		if (existsHeaderAndFooter()) {
-			if (line.equalsIgnoreCase(extractedAnnotation(fluent.getHeaderFile()).token())) {
-
-			}
-			if (line.equalsIgnoreCase(extractedAnnotation(fluent.getFooterFile()).token())) {
-				finallyRegister(line, fluent.getFooterFile());
-			}
+		try {
+			if (existsHeaderAndFooter()) {
+				if (findByToken(extractedAnnotation(fluent.getHeaderFile()), line)) {
+					header = parseStrToRecord(fluent.getHeaderFile(), line);
+				}
+				if (findByToken(extractedAnnotation(fluent.getFooterFile()), line)) {
+					finallyRegister(line, fluent.getFooterFile());
+					footer = parseStrToRecord(fluent.getFooterFile(), line);
+				}
+			}	
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+		
 	}
+
+	private boolean findByToken(Seletor extractedAnnotation, String line) {
+		switch (extractedAnnotation.seletorString()) {
+		case Contains:
+			return line.toLowerCase().contains(extractedAnnotation.token().toLowerCase());
+		case Equals:
+			return line.toLowerCase().equals(extractedAnnotation.token().toLowerCase());
+		case StarWith:
+			return line.toLowerCase().startsWith(extractedAnnotation.token().toLowerCase());
+		case EndWith:
+			return line.toLowerCase().endsWith(extractedAnnotation.token().toLowerCase());
+		default:
+			break;
+		}
+		return false;
+	}
+
 
 	private boolean existsHeaderAndFooter() {
 		if(fluent.getFooterFile() != null && fluent.getHeaderFile() != null) {
@@ -353,4 +378,24 @@ public class MasterDetailMultiRecordEngine {
 		return new RecordInfo<>(class1).recordToStr(master2);
 	}
 
+	public Object getFooter() {
+		return footer;
+	}
+
+	public void setFooter(Object footer) {
+		this.footer = footer;
+	}
+
+	public Object getHeader() {
+		return header;
+	}
+
+	public void setHeader(Object header) {
+		this.header = header;
+	}
+
+	
+	
+	
+	
 }
