@@ -5,4 +5,6 @@ import org.br.filehelpers4j.annotations.DelimitedRecord;
 @DelimitedRecord(",")
 public class EnumType2 {
 	public Enum2 enumValue;
+	public String nome;
+
 }

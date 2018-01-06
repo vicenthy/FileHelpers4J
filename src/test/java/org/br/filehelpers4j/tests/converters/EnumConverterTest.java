@@ -35,6 +35,7 @@ public class EnumConverterTest extends TestCase {
 	public static void main(String[] args) {
 		System.out.println(Enum2.One.toString());
 	}
+	
     
 	@SuppressWarnings("unchecked")
 	public void testEnumSingleCase() throws IOException {
@@ -44,7 +45,7 @@ public class EnumConverterTest extends TestCase {
 
 		assertEquals(5, res.size());
 
-		assertEquals(Enum2.One, res.get(0).enumValue);
+		assertEquals("atila", res.get(0).nome);
 		assertEquals(Enum2.Two, res.get(2).enumValue);
 		assertEquals(Enum2.Three, res.get(3).enumValue);
 		assertEquals(Enum2.Three, res.get(4).enumValue);
@@ -54,6 +55,7 @@ public class EnumConverterTest extends TestCase {
 		// In Java version, it is case sensitive and the value 
 		// here "one" does not map to Enum2.One
 		assertNull(res.get(1).enumValue);
+	
 	}
 
 }
