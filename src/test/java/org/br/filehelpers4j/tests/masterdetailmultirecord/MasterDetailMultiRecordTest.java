@@ -120,7 +120,6 @@ public class MasterDetailMultiRecordTest extends TestCase {
 		assertEquals(7, result.keySet().size());
 		assertEquals(6,result.get(result.keySet().toArray()[6]).size());
 		assertEquals(12,result.get(result.keySet().toArray()[5]).size());
-		
 		result.get(result.keySet().toArray()[5]).forEach(a -> {
 			System.out.println(a);
 		});

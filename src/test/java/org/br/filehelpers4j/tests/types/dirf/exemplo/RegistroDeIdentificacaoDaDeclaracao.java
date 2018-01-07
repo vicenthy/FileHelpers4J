@@ -26,7 +26,7 @@ public class RegistroDeIdentificacaoDaDeclaracao {
 	@FieldNullValue("N")
 	private String identificadorRetificadora;
 	@FieldOptional
-	private Integer numeroDoRecibo;
+	private String numeroDoRecibo;
 	@FieldNullValue("Q84FV63")
 	private String IdentificadorDeEstruturaDoLayout;
 	
@@ -60,10 +60,10 @@ public class RegistroDeIdentificacaoDaDeclaracao {
 	public void setIdentificadorRetificadora(String identificadorRetificadora) {
 		this.identificadorRetificadora = identificadorRetificadora;
 	}
-	public Integer getNumeroDoRecibo() {
+	public String getNumeroDoRecibo() {
 		return numeroDoRecibo;
 	}
-	public void setNumeroDoRecibo(Integer numeroDoRecibo) {
+	public void setNumeroDoRecibo(String numeroDoRecibo) {
 		this.numeroDoRecibo = numeroDoRecibo;
 	}
 	public String getIdentificadorDeEstruturaDoLayout() {

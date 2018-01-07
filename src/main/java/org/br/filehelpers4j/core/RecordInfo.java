@@ -34,6 +34,7 @@ import org.br.filehelpers4j.annotations.IgnoreCommentedLines;
 import org.br.filehelpers4j.annotations.IgnoreEmptyLines;
 import org.br.filehelpers4j.annotations.IgnoreFirst;
 import org.br.filehelpers4j.annotations.IgnoreLast;
+import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.engines.LineInfo;
 import org.br.filehelpers4j.enums.RecordCondition;
 import org.br.filehelpers4j.fields.FieldBase;
@@ -185,18 +186,21 @@ public final class RecordInfo<T> {
 	 */
 	public <T> String recordToStr(T record) throws IllegalArgumentException, IllegalAccessException {
 		StringBuffer sb = new StringBuffer(this.sizeHint);
-		
 		Object[] values = new Object[fieldCount];
-		for (int i = 0; i < fieldCount; i++) {
-//			values[i] = fields[i].getFieldInfo().get(record);
-			values[i] = getInternalField(fields[i].getFieldInfo().getName(), record);
+		try {
+			for (int i = 0; i < fieldCount; i++) {
+//				values[i] = fields[i].getFieldInfo().get(record);
+				values[i] = getInternalField(fields[i].getFieldInfo().getName(), record);
+			}
 
+			for (int i = 0; i < fieldCount; i++) {
+				fields[i].assignToString(sb, values[i]);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
 		}
 
-		for (int i = 0; i < fieldCount; i++) {
-			fields[i].assignToString(sb, values[i]);
-		}
-		
 		return sb.toString();
 	}
 	

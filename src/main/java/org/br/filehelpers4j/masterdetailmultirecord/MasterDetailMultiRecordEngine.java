@@ -52,6 +52,7 @@ import org.br.filehelpers4j.interfaces.NotifyRead;
 import org.br.filehelpers4j.interfaces.NotifyWrite;
 import org.br.filehelpers4j.masterdetail.RecordAction;
 import org.br.filehelpers4j.masterdetail.RecordActionSelector;
+import org.br.filehelpers4j.tests.types.dirf.exemplo.RegistroDeIdentificacaoDaDeclaracao;
 
 public class MasterDetailMultiRecordEngine {
 
@@ -287,45 +288,59 @@ public class MasterDetailMultiRecordEngine {
 	public void writeFile(String fileName, Map<Object, List<?>> records, int maxRecords) throws IOException {
 		try {
 			createFile(fileName);
-			writeStream(records, maxRecords);
-		} finally {
+			if(header != null) {
+				writeLine(header.getClass(), header);
+			}
+				writeStream(records, maxRecords);
+			if(footer != null) {
+				writeLine(footer.getClass(), footer);
+			}
+			} finally {
 			closeFile();
 		}
 	}
 
 	public void createFile(String fileName) throws IOException {
-		fw = new FileWriter(new File(fileName));
+		File file = new File(fileName);
+		if(!file.exists()) {
+			file.createNewFile();
+		}
+		fw = new FileWriter(file);
 		writer = new BufferedWriter(fw);
-
-	}
+		
+}
 
 	public <T> void writeLine(Class<?> clazz, T obj) {
 		try {
 			writer.write(parseRecordToStr(obj, clazz) + StringHelper.NEW_LINE);
 			writer.flush();
+			
 		} catch (IOException | IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void writeStream(Map<Object, List<?>> records, int maxRecords) throws IOException {
+	private void writeStream(Map<Object, List<?>> records, int maxRecords) throws IOException {;
 		records.forEach((master, details) -> {
 			try {
 				writeLine(master.getClass(), master);
 				details.forEach(detail -> {
 					try {
+						if(detail instanceof LinkedHashMap ) {
+							writeStream((LinkedHashMap) detail, maxRecords);
+						}else {
 						writeLine(detail.getClass(), detail);
-					} catch (IllegalArgumentException e) {
+						}
+					} catch (IllegalArgumentException | IOException e) {
 						e.printStackTrace();
-					}
+					}					
 				});
-
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 		});
-
 	}
 
 	private void closeFile() throws IOException {
@@ -361,7 +376,7 @@ public class MasterDetailMultiRecordEngine {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T> boolean onBeforeWriteRecord(T record, RecordInfo<T> recordInfo) {
+	private <T> boolean onBeforeWriteRecord(T obj, RecordInfo recordInfo) {
 		return false;
 	}
 
@@ -373,9 +388,11 @@ public class MasterDetailMultiRecordEngine {
 		return new RecordInfo<T>(clazz).strToRecord(new LineInfo(text));
 	}
 
-	public <T> String parseRecordToStr(Object master2, Class<? extends Object> class1)
+	public <T> String parseRecordToStr(T obj, Class<?> clazz)
 			throws IllegalArgumentException, IllegalAccessException {
-		return new RecordInfo<>(class1).recordToStr(master2);
+		RecordInfo<?> recordInfo = new RecordInfo<>(clazz);
+		onBeforeWriteRecord(obj, recordInfo);
+		return recordInfo.recordToStr(obj);
 	}
 
 	public Object getFooter() {
