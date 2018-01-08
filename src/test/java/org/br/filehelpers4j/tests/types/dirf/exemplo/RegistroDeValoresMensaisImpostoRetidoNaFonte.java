@@ -4,10 +4,11 @@ import org.br.filehelpers4j.annotations.DelimitedRecord;
 import org.br.filehelpers4j.annotations.FieldNullValue;
 import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.masterdetail.RecordAction;
+import org.br.filehelpers4j.masterdetail.SelectorString;
 
 
 @DelimitedRecord("|")
-@Seletor(token="RTIRF", type=RecordAction.SubDetail)
+@Seletor(token="RTIRF", type=RecordAction.SubDetail, seletorString=SelectorString.StarWith)
 public class RegistroDeValoresMensaisImpostoRetidoNaFonte {
 
 	@FieldNullValue("RTIRF")
@@ -169,6 +170,16 @@ public class RegistroDeValoresMensaisImpostoRetidoNaFonte {
 
 	public void setDecimoTerceiro(String decimoTerceiro) {
 		this.decimoTerceiro = decimoTerceiro;
+	}
+
+
+	@Override
+	public String toString() {
+		return "RegistroDeValoresMensaisImpostoRetidoNaFonte [identificadorDoRegistro=" + identificadorDoRegistro
+				+ ", janeiro=" + janeiro + ", fevereiro=" + fevereiro + ", marco=" + marco + ", abril=" + abril
+				+ ", maio=" + maio + ", junho=" + junho + ", julho=" + julho + ", agosto=" + agosto + ", setembro="
+				+ setembro + ", outubro=" + outubro + ", novembro=" + novembro + ", dezembro=" + dezembro
+				+ ", decimoTerceiro=" + decimoTerceiro + "]";
 	}
 	
 	

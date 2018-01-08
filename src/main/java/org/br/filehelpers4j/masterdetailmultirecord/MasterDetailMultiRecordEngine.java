@@ -75,6 +75,9 @@ public class MasterDetailMultiRecordEngine {
 
 	public MasterDetailMultiRecordEngine(MasterDetailMultiRecordFluent fluent) {
 		this.fluent = fluent;
+	}
+
+	private void init() {
 		masterDetailMultiRecod = new LinkedHashMap<>();
 		masterDetailSubDetail = new LinkedHashMap<>();
 		details = new ArrayList<>();
@@ -82,6 +85,7 @@ public class MasterDetailMultiRecordEngine {
 	}
 
 	private Map<Object, List<?>> readStream(Reader fileReader) {
+		init();
 		BufferedReader reader = new BufferedReader(fileReader);
 		reader.lines().forEach(line -> {
 			RecordAction action = RecordAction.Skip;
@@ -90,16 +94,19 @@ public class MasterDetailMultiRecordEngine {
 				action = getCurrentRecorAction(entry);
 			}
 			switch (action) {
+			case HeaderFile:
+				verifyHeaderOrFooter(line);
+				break;
 			case HeaderTransaction:
 				processHeaderTransaction(line, entry);
 				break;
 			case Master:
-				finallyRegisterMasterDetail(line, entry);
-				finallyRegister(line, entry);
+				finallyRegisterMasterDetail();
+				finallyRegister();
 				processMaster(line, entry);
 				break;
 			case MasterDetail:
-				finallyRegisterMasterDetail(line, entry);
+				finallyRegisterMasterDetail();
 				processMasterDetail(line, entry);
 				break;
 			case SubDetail:
@@ -112,6 +119,11 @@ public class MasterDetailMultiRecordEngine {
 				processTraillerTransaction(line, entry);
 				break;
 			case Skip:
+				processSkip(line, entry);
+				break;
+			case TraillerFile:
+				finallyRegisterMasterDetail();
+				finallyRegister();
 				verifyHeaderOrFooter(line);
 				break;
 			default:
@@ -122,12 +134,19 @@ public class MasterDetailMultiRecordEngine {
 		return masterDetailMultiRecod;
 	}
 
+	private void processSkip(String line, Class<?> entry) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private void processSubDetail(String line, Class<?> entry) {
 		try {
 			subdetails.add(parseStrToRecord(entry, line));
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
-		}	}
+		}	
+		
+	}
 
 	private void processMasterDetail(String line, Class<?> entry) {
 		try {
@@ -146,7 +165,6 @@ public class MasterDetailMultiRecordEngine {
 					header = parseStrToRecord(fluent.getHeaderFile(), line);
 				}
 				if (findByToken(extractedAnnotation(fluent.getFooterFile()), line)) {
-					finallyRegister(line, fluent.getFooterFile());
 					footer = parseStrToRecord(fluent.getFooterFile(), line);
 				}
 			}	
@@ -193,27 +211,28 @@ public class MasterDetailMultiRecordEngine {
 		return extractedAnnotation(entry).type();
 	}
 
-	private void finallyRegister(String line, Class<?> clazz) {
+	private void finallyRegister() {
 		if (master != null && details.size() > 0) {
 			masterDetailMultiRecod.put(master, details);
 		} else if (master != null) {
-			masterDetailMultiRecod.put(master, details);
+			masterDetailMultiRecod.put(master, new ArrayList<>());
 		}
 		master = null;
 		details = new ArrayList<>();
 	}
 
 	
-	private void finallyRegisterMasterDetail(String line, Class<?> clazz) {
+	private void finallyRegisterMasterDetail() {
 		if (masterdetail != null && subdetails.size() > 0) {
 			masterDetailSubDetail.put(masterdetail, subdetails);
 			details.add(masterDetailSubDetail);
 		} else if (masterdetail != null) {
-			masterDetailSubDetail.put(masterdetail, subdetails);
+			masterDetailSubDetail.put(masterdetail, new ArrayList<>());
 			details.add(masterDetailSubDetail);
 		}
 		masterdetail = null;
 		subdetails = new ArrayList<>();
+		masterDetailSubDetail = new LinkedHashMap<>();
 	}
 	
 	private void processHeaderTransaction(String line, Class<?> clazz) {
@@ -241,9 +260,11 @@ public class MasterDetailMultiRecordEngine {
 	private Class<?> checkRegisterType(String line) {
 		try {
 			return fluent.getMapper().stream()
-					.filter(a -> extractedAnnotation(a) != null && line.contains(extractedAnnotation(a).token()))
-					.findFirst().get();
+					.filter(a ->  extractedAnnotation(a)!= null && findByToken(extractedAnnotation(a), line ))
+					.findFirst().orElse(null);
+			
 		} catch (NoSuchElementException e) {
+			e.printStackTrace();
 			return null;
 		}
 
@@ -321,7 +342,7 @@ public class MasterDetailMultiRecordEngine {
 	}
 
 	private void writeStream(Map<Object, List<?>> records, int maxRecords) throws IOException {;
-		records.forEach((master, details) -> {
+	records.forEach((master, details) -> {
 			try {
 				writeLine(master.getClass(), master);
 				details.forEach(detail -> {
@@ -329,12 +350,13 @@ public class MasterDetailMultiRecordEngine {
 						if(detail instanceof LinkedHashMap ) {
 							writeStream((LinkedHashMap) detail, maxRecords);
 						}else {
-						writeLine(detail.getClass(), detail);
+							writeLine(detail.getClass(), detail);
 						}
-					} catch (IllegalArgumentException | IOException e) {
+					} catch (IllegalArgumentException | IOException  e) {
 						e.printStackTrace();
 					}					
 				});
+				
 				
 			} catch (Exception e) {
 				e.printStackTrace();

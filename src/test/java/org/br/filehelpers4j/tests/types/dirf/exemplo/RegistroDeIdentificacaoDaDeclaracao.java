@@ -72,6 +72,14 @@ public class RegistroDeIdentificacaoDaDeclaracao {
 	public void setIdentificadorDeEstruturaDoLayout(String identificadorDeEstruturaDoLayout) {
 		IdentificadorDeEstruturaDoLayout = identificadorDeEstruturaDoLayout;
 	}
+
+	@Override
+	public String toString() {
+		return "RegistroDeIdentificacaoDaDeclaracao [identificadorDoRegistro=" + identificadorDoRegistro
+				+ ", anoReferencia=" + anoReferencia + ", anoCalendario=" + anoCalendario
+				+ ", identificadorRetificadora=" + identificadorRetificadora + ", numeroDoRecibo=" + numeroDoRecibo
+				+ ", IdentificadorDeEstruturaDoLayout=" + IdentificadorDeEstruturaDoLayout + "]";
+	}
 	
 	
 	

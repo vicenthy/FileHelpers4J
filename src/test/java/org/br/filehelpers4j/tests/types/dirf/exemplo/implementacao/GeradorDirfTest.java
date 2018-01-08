@@ -74,8 +74,11 @@ public class GeradorDirfTest {
 
 			result.values().forEach(detail -> {
 				if(detail.size() > 0) {
-				detail.forEach(masterdetail -> {
-					//assertEquals(3, ((LinkedHashMap)masterdetail).keySet().size());
+					detail.forEach(masterdetail -> {
+						//((LinkedHashMap)masterdetail).values().forEach(a -> System.out.println(a));
+						//((LinkedHashMap)masterdetail).keySet().forEach(a -> System.out.println(a));
+
+						//assertEquals(3, ((LinkedHashMap)masterdetail).keySet().size());
 				});	
 				}
 				
@@ -89,15 +92,19 @@ public class GeradorDirfTest {
 	}
 	
 	
+	@Test
+	public void gerarArquivoDirfManual() {
+	
+	}
+	
 	
 	@Test
-	public void gerarArquivoDirf() {
+	public void gerarArquivoDirfDeListaVindaDoArquivoPronto() {
 		try {
 			result = engine.readFile(BASEDIR + ARQUIVO);
 			assertNotNull(result);
 			engine.writeFile(BASEDIR + ARQUIVO_SAIDA, result, 1);
 			assertTrue(file.exists());
-		
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 				reader.lines().forEach(line -> {
 					System.out.println(line);

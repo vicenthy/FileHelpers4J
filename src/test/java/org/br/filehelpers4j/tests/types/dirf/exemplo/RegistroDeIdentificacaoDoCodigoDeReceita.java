@@ -4,9 +4,10 @@ import org.br.filehelpers4j.annotations.DelimitedRecord;
 import org.br.filehelpers4j.annotations.FieldNullValue;
 import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.masterdetail.RecordAction;
+import org.br.filehelpers4j.masterdetail.SelectorString;
 
 @DelimitedRecord("|")
-@Seletor(token="IDREC", type=RecordAction.Master)
+@Seletor(token="IDREC", type=RecordAction.Master, seletorString=SelectorString.StarWith)
 public class RegistroDeIdentificacaoDoCodigoDeReceita {
 
 	@FieldNullValue("IDREC")
@@ -46,6 +47,15 @@ public class RegistroDeIdentificacaoDoCodigoDeReceita {
 
 	public void setCodigoDeReceita(String codigoDeReceita) {
 		this.codigoDeReceita = codigoDeReceita;
+	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "RegistroDeIdentificacaoDoCodigoDeReceita [identificadorDoRegistro=" + identificadorDoRegistro
+				+ ", codigoDeReceita=" + codigoDeReceita + "]";
 	}
 	
 	

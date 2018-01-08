@@ -33,6 +33,14 @@ public class RegistroDeIdentificacaoDoTerminoDaDeclaracao {
 	public void setIdentificadorDoRegistro(String identificadorDoRegistro) {
 		this.identificadorDoRegistro = identificadorDoRegistro;
 	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "RegistroDeIdentificacaoDoTerminoDaDeclaracao [identificadorDoRegistro=" + identificadorDoRegistro + "]";
+	}
 	
 	
 	

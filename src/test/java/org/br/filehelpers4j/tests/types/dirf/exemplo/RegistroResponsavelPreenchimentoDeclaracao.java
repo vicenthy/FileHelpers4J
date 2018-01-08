@@ -4,9 +4,10 @@ import org.br.filehelpers4j.annotations.DelimitedRecord;
 import org.br.filehelpers4j.annotations.FieldNullValue;
 import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.masterdetail.RecordAction;
+import org.br.filehelpers4j.masterdetail.SelectorString;
 
 @DelimitedRecord("|")
-@Seletor(token="RESPO", type=RecordAction.Master)
+@Seletor(token="RESPO", type=RecordAction.Master, seletorString=SelectorString.StarWith)
 public class RegistroResponsavelPreenchimentoDeclaracao {
 	
 	@FieldNullValue("RESPO")
@@ -136,6 +137,16 @@ public class RegistroResponsavelPreenchimentoDeclaracao {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "RegistroResponsavelPreenchimentoDeclaracao [identificadorDoRegistro=" + identificadorDoRegistro
+				+ ", cpf=" + cpf + ", nome=" + nome + ", ddd=" + ddd + ", telefone=" + telefone + ", ramal=" + ramal
+				+ ", fax=" + fax + ", email=" + email + "]";
 	}
 	
 	

@@ -5,9 +5,10 @@ import org.br.filehelpers4j.annotations.FieldNullValue;
 import org.br.filehelpers4j.annotations.FieldOptional;
 import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.masterdetail.RecordAction;
+import org.br.filehelpers4j.masterdetail.SelectorString;
 
 @DelimitedRecord("|")
-@Seletor(token="BPFDEC", type=RecordAction.MasterDetail)
+@Seletor(token="BPFDEC", type=RecordAction.MasterDetail, seletorString=SelectorString.StarWith)
 public class RegistroDeBeneficiarioPessoaFisicaDoDeclarante {
 	
 	
@@ -123,6 +124,19 @@ public class RegistroDeBeneficiarioPessoaFisicaDoDeclarante {
 	public void setIndicadorDeIdentificacaoDePrevidenciaComplementar(
 			String indicadorDeIdentificacaoDePrevidenciaComplementar) {
 		this.indicadorDeIdentificacaoDePrevidenciaComplementar = indicadorDeIdentificacaoDePrevidenciaComplementar;
+	}
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "RegistroDeBeneficiarioPessoaFisicaDoDeclarante [identificadoDoRegistro=" + identificadoDoRegistro
+				+ ", cpf=" + cpf + ", nome=" + nome + ", dataAtribuidaPeloLaudoDaMolesiaGrave="
+				+ dataAtribuidaPeloLaudoDaMolesiaGrave + ", indicadorDeIdentificacaoDoAlimentado="
+				+ indicadorDeIdentificacaoDoAlimentado + ", indicadorDeIdentificacaoDePrevidenciaComplementar="
+				+ indicadorDeIdentificacaoDePrevidenciaComplementar + "]";
 	}
 	
 	

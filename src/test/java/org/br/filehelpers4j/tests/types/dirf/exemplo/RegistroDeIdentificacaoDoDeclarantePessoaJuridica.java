@@ -4,9 +4,10 @@ import org.br.filehelpers4j.annotations.DelimitedRecord;
 import org.br.filehelpers4j.annotations.FieldNullValue;
 import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.masterdetail.RecordAction;
+import org.br.filehelpers4j.masterdetail.SelectorString;
 
 @DelimitedRecord("|")
-@Seletor(token="DECPJ", type=RecordAction.Master)
+@Seletor(token="DECPJ", type=RecordAction.Master, seletorString=SelectorString.StarWith)
 public class RegistroDeIdentificacaoDoDeclarantePessoaJuridica {
 	
 	@FieldNullValue("DECPJ")
@@ -257,6 +258,27 @@ public class RegistroDeIdentificacaoDoDeclarantePessoaJuridica {
 
 	public void setDataEvento(String dataEvento) {
 		this.dataEvento = dataEvento;
+	}
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "RegistroDeIdentificacaoDoDeclarantePessoaJuridica [idenficadorDoRegistro=" + idenficadorDoRegistro
+				+ ", cnpj=" + cnpj + ", nomeEmpresarial=" + nomeEmpresarial + ", naturezaDoDeclarante="
+				+ naturezaDoDeclarante + ", cpfPeranteCnpj=" + cpfPeranteCnpj
+				+ ", indicadorSocioOstensivoResponsavelSCP=" + indicadorSocioOstensivoResponsavelSCP
+				+ ", indicadorDeclaranteDepositarioDecorrenteDecisaoJudicial="
+				+ indicadorDeclaranteDepositarioDecorrenteDecisaoJudicial
+				+ ", indicadorDeclaranteAdministradoraOuIntermediadora="
+				+ indicadorDeclaranteAdministradoraOuIntermediadora + ", indicadorDeDeclanteResidenteNoExterior="
+				+ indicadorDeDeclanteResidenteNoExterior + ", indicadorDePlanoPrivadoDeAssistenciaASaude="
+				+ indicadorDePlanoPrivadoDeAssistenciaASaude + ", indicadorDePagamentoOlimpiadas2016="
+				+ indicadorDePagamentoOlimpiadas2016 + ", indicadorEntidadeCapitalSocialSujeitoAVoto="
+				+ indicadorEntidadeCapitalSocialSujeitoAVoto + ", indicadorSituacaoEspecialDaDeclaracao="
+				+ indicadorSituacaoEspecialDaDeclaracao + ", dataEvento=" + dataEvento + "]";
 	}
 	
 	

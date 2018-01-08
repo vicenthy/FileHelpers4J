@@ -200,7 +200,6 @@ public final class RecordInfo<T> {
 			e.printStackTrace();
 			// TODO: handle exception
 		}
-
 		return sb.toString();
 	}
 	
