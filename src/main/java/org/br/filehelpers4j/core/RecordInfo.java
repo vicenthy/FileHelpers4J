@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.br.filehelpers4j.annotations.FieldNullValue;
 import org.br.filehelpers4j.annotations.FixedLengthRecord;
 import org.br.filehelpers4j.annotations.IgnoreCommentedLines;
 import org.br.filehelpers4j.annotations.IgnoreEmptyLines;
@@ -189,8 +190,10 @@ public final class RecordInfo<T> {
 		Object[] values = new Object[fieldCount];
 		try {
 			for (int i = 0; i < fieldCount; i++) {
-//				values[i] = fields[i].getFieldInfo().get(record);
-				values[i] = getInternalField(fields[i].getFieldInfo().getName(), record);
+					values[i] = getInternalField(fields[i].getFieldInfo().getName(), record);
+				if(values[i] == null) {
+					values[i] = verifyFieldNullValue(fields[i].getFieldInfo());
+				}
 			}
 
 			for (int i = 0; i < fieldCount; i++) {
@@ -202,6 +205,10 @@ public final class RecordInfo<T> {
 		}
 		return sb.toString();
 	}
+	
+	
+	
+	
 	
 	/**
 	 * Instantiates a new object of the record class type
@@ -221,7 +228,13 @@ public final class RecordInfo<T> {
 		}
 	}
 	
-	
+	private Object verifyFieldNullValue(Field fieldInfo) {
+		if(fieldInfo.isAnnotationPresent(FieldNullValue.class)) {
+			return fieldInfo.getAnnotation(FieldNullValue.class).value();
+		}
+		return null;
+	}
+
 	
 	public T convertObjectToGenertics(Object o) {
 		return (T)o;

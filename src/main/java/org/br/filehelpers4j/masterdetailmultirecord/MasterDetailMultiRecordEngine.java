@@ -345,6 +345,7 @@ public class MasterDetailMultiRecordEngine {
 	records.forEach((master, details) -> {
 			try {
 				writeLine(master.getClass(), master);
+				if(details != null) {
 				details.forEach(detail -> {
 					try {
 						if(detail instanceof LinkedHashMap ) {
@@ -356,6 +357,7 @@ public class MasterDetailMultiRecordEngine {
 						e.printStackTrace();
 					}					
 				});
+				}
 				
 				
 			} catch (Exception e) {

@@ -33,6 +33,18 @@ public class RegistroDeValoresMensaisImpostoRetidoNaFonte {
 	}
 
 
+	public RegistroDeValoresMensaisImpostoRetidoNaFonte(String janeiro, String fevereiro, String marco,
+			String abril, String maio, String junho) {
+		this.janeiro = janeiro;
+		this.fevereiro = fevereiro;
+		this.marco = marco;
+		this.abril = abril;
+		this.maio = maio;
+		this.junho = junho;
+
+	}
+
+
 	public String getIdentificadorDoRegistro() {
 		return identificadorDoRegistro;
 	}

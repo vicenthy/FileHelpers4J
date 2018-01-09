@@ -33,6 +33,15 @@ public class RegistroDeBeneficiarioPessoaFisicaDoDeclarante {
 
 
 
+	public RegistroDeBeneficiarioPessoaFisicaDoDeclarante(String cpf, String nome) {
+		this.cpf = cpf;
+		this.nome = nome;
+	}
+
+
+
+
+
 	public String getIdentificadoDoRegistro() {
 		return identificadoDoRegistro;
 	}

@@ -87,7 +87,8 @@ public class MasterDetailMultiRecordTest extends TestCase {
 		.addMapperFile(Fonograma.class)
 		.addMapperFile(TitularesFonograma.class)
 		.addMapperFile(InstrumentosFonograma.class)
-		.addMapperFile(TraillerFonograma.class);
+		.addMapperFile(TraillerFonograma.class)
+		.addMapperFile(TraillerFile.class);
 	
 		mapa.setFooterFile(TraillerFile.class);
 		mapa.setHeaderFile(HeaderFile.class);

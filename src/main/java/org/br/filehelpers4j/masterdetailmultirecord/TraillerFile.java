@@ -21,8 +21,9 @@ package org.br.filehelpers4j.masterdetailmultirecord;
 
 import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.masterdetail.RecordAction;
+import org.br.filehelpers4j.masterdetail.SelectorString;
 
-@Seletor(token="CMP0FON000000", type=RecordAction.TraillerFile)
+@Seletor(token="CMPFIM", type=RecordAction.TraillerFile, seletorString=SelectorString.Contains)
 public class TraillerFile {
 
 }
