@@ -1,7 +1,7 @@
 /*
  * MasterDetailMultiRecordFluentImplement.java
  *
- * Copyright (C) 2007 Felipe Gonçalves Coury <felipe.coury@gmail.com>
+ * Copyright (C) 2017 Atila Augusto dos Santos - <atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,17 +19,18 @@
  */
 package org.br.filehelpers4j.masterdetailmultirecord;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.br.filehelpers4j.masterdetail.RecordActionSelector;
 
-public class MasterDetailMultiRecordFluentImplement implements MasterDetailMultiRecordFluent{
+public class MasterDetailMultiRecordFluentImplement implements MasterDetailMultiRecordFluent, Serializable{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3660496374250929580L;
 	private List<Class<?>> mapper;
 	private Class<?> headerFile;
 	private Class<?> footerFile;

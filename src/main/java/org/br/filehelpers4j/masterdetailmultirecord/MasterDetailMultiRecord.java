@@ -1,7 +1,7 @@
 /*
  * MasterDetailMultiRecord.java
  *
- * Copyright (C) 2007 Felipe Gonçalves Coury <felipe.coury@gmail.com>
+ * Copyright (C) 2007 Atila Augusto dos Santos - <atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,33 +19,30 @@
  */
 package org.br.filehelpers4j.masterdetailmultirecord;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 
 
-public class MasterDetailMultiRecord {
+public class MasterDetailMultiRecord implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3699256987812406420L;
 	private Map<Object, List<?>> masterDetailMultiRecod;
 		
 	public MasterDetailMultiRecord() {	
 		
 	}
-	
-	
-	
-	
-	
+		
 	public Map<?, List<?>> getMasterDetailMultiRecod() {
 		return masterDetailMultiRecod;
 	}
-
 	public void setMasterDetailMultiRecod(Map<Object, List<?>> masterDetailMultiRecod) {
 		this.masterDetailMultiRecod = masterDetailMultiRecod;
 	}	
-	
-	
-	
 	public <T> void addMasterDetailMultiRecord(T master, List<?> details) {
 		masterDetailMultiRecod.put(master, details);
 	}

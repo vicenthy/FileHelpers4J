@@ -105,11 +105,7 @@ public final class RecordInfo<T> {
 	
 			record = createRecordObject();
 			for (int i = 0; i < fieldCount; i++) {
-				// sets the field on the object
 				setInternalField(fields[i].getFieldInfo().getName(), record, values[i]);
-//				Field f = record.getClass().getDeclaredField(fields[i].getFieldInfo().getName());
-//				f.set(record, values[i]);
-				// fields[i].getFieldInfo().set(record, values[i]);
 			}
 		}
 		catch (Exception e) {
@@ -118,25 +114,6 @@ public final class RecordInfo<T> {
 		}
 		
 		return record;
-		
-		// TODO Improve
-//		CreateAssingMethods();
-//
-//        try
-//        {
-//            // Asign all values via dinamic method that creates an object and assign values
-//           return mCreateHandler(mValues);
-//        }
-//        catch (InvalidCastException)
-//        {
-//            // Occurrs when the a custom converter returns an invalid value for the field.
-//            for (int i = 0; i < mFieldCount; i++)
-//            {
-//                if (mValues[i] != null && ! mFields[i].mFieldType.IsInstanceOfType(mValues[i]))
-//                    throw new ConvertException(null, mFields[i].mFieldType, mFields[i].mFieldInfo.Name, line.mReader.LineNumber, -1, "The converter for the field: " + mFields[i].mFieldInfo.Name + " returns an object of Type: " + mValues[i].GetType().Name + " and the field is of type: " + mFields[i].mFieldType.Name);
-//            }
-//            return null;
-//        }
 	}
 	
 	static Object getInternalField(final String fieldName, final Object target) {

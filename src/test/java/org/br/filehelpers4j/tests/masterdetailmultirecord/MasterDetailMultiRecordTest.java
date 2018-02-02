@@ -1,7 +1,7 @@
 /*
  * MasterDetailMultiRecord.java
  *
- * Copyright (C) 2007 Felipe Gonçalves Coury <felipe.coury@gmail.com>
+ * Copyright (C) 2007 Atila Augusto dos Santos - <atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,13 +28,13 @@ import java.util.Map;
 
 import org.br.filehelpers4j.masterdetail.RecordAction;
 import org.br.filehelpers4j.masterdetail.RecordActionSelector;
-import org.br.filehelpers4j.masterdetailmultirecord.HeaderFile;
+import org.br.filehelpers4j.masterdetailmultirecord.DefaultHeaderFile;
 import org.br.filehelpers4j.masterdetailmultirecord.MasterDetailMultiRecordEngine;
 import org.br.filehelpers4j.masterdetailmultirecord.MasterDetailMultiRecordFluentImplement;
-import org.br.filehelpers4j.masterdetailmultirecord.TraillerFile;
+import org.br.filehelpers4j.masterdetailmultirecord.DefaultTraillerFile;
 import org.br.filehelpers4j.tests.types.multirecord.Fonograma;
 import org.br.filehelpers4j.tests.types.multirecord.FonogramaMasterDetail;
-import org.br.filehelpers4j.tests.types.multirecord.HeaderFonograma;
+import org.br.filehelpers4j.tests.types.multirecord.HeaderTransacionFonograma;
 import org.br.filehelpers4j.tests.types.multirecord.HeaderObra;
 import org.br.filehelpers4j.tests.types.multirecord.HeaderTitular;
 import org.br.filehelpers4j.tests.types.multirecord.InstrumentosFonograma;
@@ -80,7 +80,7 @@ public class MasterDetailMultiRecordTest extends TestCase {
 		.addMapperFile(SubTitulo.class)
 		.addMapperFile(TraillerObra.class)
 		//Fonograma
-		.addMapperFile(HeaderFonograma.class)
+		.addMapperFile(HeaderTransacionFonograma.class)
 		.addMapperFile(FonogramaMasterDetail.class)
 		.addMapperFile(TitularesFonogramaSubDetail1.class)
 		.addMapperFile(TitularesFonogramaSubDetail2.class)
@@ -88,10 +88,10 @@ public class MasterDetailMultiRecordTest extends TestCase {
 		.addMapperFile(TitularesFonograma.class)
 		.addMapperFile(InstrumentosFonograma.class)
 		.addMapperFile(TraillerFonograma.class)
-		.addMapperFile(TraillerFile.class);
+		.addMapperFile(DefaultTraillerFile.class);
 	
-		mapa.setFooterFile(TraillerFile.class);
-		mapa.setHeaderFile(HeaderFile.class);
+		mapa.setFooterFile(DefaultTraillerFile.class);
+		mapa.setHeaderFile(DefaultHeaderFile.class);
 		
 		engine = new MasterDetailMultiRecordEngine(mapa);
 		file = new File(BASEDIR + "masterdetailmultirecord-result.txt");
@@ -110,6 +110,11 @@ public class MasterDetailMultiRecordTest extends TestCase {
 		assertEquals(3, result.get(result.keySet().toArray()[3]).size());
 		assertEquals(3, result.get(result.keySet().toArray()[4]).size());
 		assertEquals(13,result.get(result.keySet().toArray()[5]).size());
+		
+	System.out.println(engine.getTraillerTransaction(result.keySet().toArray()[5], TraillerFonograma.class));
+	System.out.println(engine.getHeaderTransaction(result.keySet().toArray()[5], HeaderTransacionFonograma.class));
+	
+		
 		
 	}
 

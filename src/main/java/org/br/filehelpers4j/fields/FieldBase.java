@@ -91,11 +91,19 @@ public abstract class FieldBase {
 			}
 		}
 		
-		ExtractedInfo info = extractFieldString(line);
-		if (info.getCustomExtractedString() == null) {
-			line.setCurrentPos(info.getExtractedTo() + 1);
-		}
+		ExtractedInfo info = null;
+		try {
+			info = extractFieldString(line);
+			if (info.getCustomExtractedString() == null) {
+				line.setCurrentPos(info.getExtractedTo() + 1);
+			}
 
+		} catch (WrongLenthException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
 		line.setCurrentPos(line.getCurrentPos() + charsToDiscard);
 		
 		return assignFromString(info, line);
@@ -128,7 +136,7 @@ public abstract class FieldBase {
 		return val;
 	}
 	
-	protected abstract ExtractedInfo extractFieldString(LineInfo line);
+	protected abstract ExtractedInfo extractFieldString(LineInfo line) throws WrongLenthException;
 	
 	protected abstract void createFieldString(StringBuffer sb, Object fieldValue);
 	
@@ -147,7 +155,7 @@ public abstract class FieldBase {
 	}
 	
 	private Object assignFromString(ExtractedInfo fieldString, LineInfo line) {
-		Object val;
+		Object val = null;
 		
 		switch (trimMode) {
 		case None:

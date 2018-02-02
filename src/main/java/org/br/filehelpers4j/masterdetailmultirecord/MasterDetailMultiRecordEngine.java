@@ -1,7 +1,7 @@
 /*
  * MasterDetailMultiRecordEngine.java
  *
- * Copyright (C) 2007 Felipe Gonçalves Coury <felipe.coury@gmail.com>
+ * Copyright (C) 2007 Atila Augusto dos Santos - <atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,42 +26,43 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
-import java.lang.annotation.Annotation;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.core.RecordInfo;
 import org.br.filehelpers4j.engines.LineInfo;
-import org.br.filehelpers4j.events.AfterReadRecordEventArgs;
 import org.br.filehelpers4j.events.AfterReadRecordHandler;
-import org.br.filehelpers4j.events.AfterWriteRecordEventArgs;
 import org.br.filehelpers4j.events.AfterWriteRecordHandler;
 import org.br.filehelpers4j.events.BeforeReadRecordEventArgs;
 import org.br.filehelpers4j.events.BeforeReadRecordHandler;
-import org.br.filehelpers4j.events.BeforeWriteRecordEventArgs;
 import org.br.filehelpers4j.events.BeforeWriteRecordHandler;
 import org.br.filehelpers4j.helpers.StringHelper;
-import org.br.filehelpers4j.interfaces.NotifyRead;
-import org.br.filehelpers4j.interfaces.NotifyWrite;
 import org.br.filehelpers4j.masterdetail.RecordAction;
-import org.br.filehelpers4j.masterdetail.RecordActionSelector;
-import org.br.filehelpers4j.tests.types.dirf.exemplo.RegistroDeIdentificacaoDaDeclaracao;
 
-public class MasterDetailMultiRecordEngine {
+public class MasterDetailMultiRecordEngine implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7381910119361044469L;
 	private MasterDetailMultiRecordFluent fluent;
 	private Object master;
 	private List<Object> details;
 	private Object masterdetail;
 	private List<Object> subdetails;
 	private Map<Object, List<?>> masterDetailSubDetail;
+	private Map<Object, Object> traillerTransactions;
+	private Map<Object, Object> headerTransactions;
+	private Object headerTransaction;
 	private Map<Object, List<?>> masterDetailMultiRecod;
 	private FileWriter fw;
 	private BufferedWriter writer;
@@ -80,6 +81,8 @@ public class MasterDetailMultiRecordEngine {
 	private void init() {
 		masterDetailMultiRecod = new LinkedHashMap<>();
 		masterDetailSubDetail = new LinkedHashMap<>();
+		traillerTransactions = new LinkedHashMap<>();
+		headerTransactions = new LinkedHashMap<>();
 		details = new ArrayList<>();
 		subdetails = new ArrayList<>();
 	}
@@ -135,7 +138,6 @@ public class MasterDetailMultiRecordEngine {
 	}
 
 	private void processSkip(String line, Class<?> entry) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -204,7 +206,15 @@ public class MasterDetailMultiRecordEngine {
 	}
 
 	private void processTraillerTransaction(String line, Class<?> entry) {
+		try {
+			traillerTransactions.put(master, parseStrToRecord(entry, line));
+			headerTransactions.put(master, headerTransaction);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 
+		}
+	
 	}
 
 	private RecordAction getCurrentRecorAction(Class<?> entry) {
@@ -236,7 +246,15 @@ public class MasterDetailMultiRecordEngine {
 	}
 	
 	private void processHeaderTransaction(String line, Class<?> clazz) {
-
+		
+		try {
+			headerTransaction = parseStrToRecord(clazz, line);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			new RuntimeException();
+		}
+		
 	}
 
 	private void processDetail(String line, Class<?> clazz) {
@@ -290,6 +308,21 @@ public class MasterDetailMultiRecordEngine {
 			}
 		}
 		return result;
+	}
+	
+	
+	public Stream<Entry<Object, List<?>>> readFileAsAStreamApi(String fileName) throws IOException {
+		Map<Object, List<?>> result;
+		FileReader fr = null;
+		try {
+			fr = new FileReader(new File(fileName));
+			result = readStream(fr);
+		} finally {
+			if (fr != null) {
+				fr.close();
+			}
+		}
+		return result.entrySet().stream();
 	}
 
 	public Map<Object, List<?>> readResource(String fileName) throws IOException {
@@ -358,7 +391,6 @@ public class MasterDetailMultiRecordEngine {
 					}					
 				});
 				}
-				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -437,6 +469,12 @@ public class MasterDetailMultiRecordEngine {
 
 	
 	
+	public <T> T getTraillerTransaction(Object master, Class<T> klass) {
+		return  (T) traillerTransactions.get(master);
+	}
+	public <T> T getHeaderTransaction(Object master, Class<T> klass) {
+		return  (T) headerTransactions.get(master);
+	}
 	
 	
 }

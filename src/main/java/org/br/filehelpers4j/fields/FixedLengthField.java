@@ -42,7 +42,7 @@ public class FixedLengthField extends FieldBase {
 	}
 	
 	@Override
-	protected ExtractedInfo extractFieldString(LineInfo line) {
+	protected ExtractedInfo extractFieldString(LineInfo line) throws WrongLenthException {
 		if (line.getCurrentLength() == 0) {
 			if (isOptional())
 				return ExtractedInfo.Empty;
@@ -53,7 +53,6 @@ public class FixedLengthField extends FieldBase {
 						line.getLineNumber() + ". " +
 						"(You need to mark it as @FieldOptional if you want to avoid this exception)");
 		}
-		
 		ExtractedInfo res;
 
 		if (line.getCurrentLength() < this.fieldLength) {
@@ -61,23 +60,11 @@ public class FixedLengthField extends FieldBase {
 				res = new ExtractedInfo(line);
 			}
 			else {
-				throw new IllegalArgumentException(
-						"The string '" + line.getCurrentString() + 
-						"' (length " + line.getCurrentLength() + ") at line " + 
-						line.getLineNumber() + " has less chars than the defined for " + 
-						getFieldInfo().getName() + " (" + fieldLength + "). " +
-						"You can use the @FixedLengthRecord(fixedMode=FixedMode.AllowLessChars) to avoid this problem.");
-			}
-		}
-		else if (isLast() && line.getCurrentLength() > fieldLength && fixedMode != FixedMode.AllowMoreChars && fixedMode != FixedMode.AllowVariableLength) {
-			throw new IllegalArgumentException(
-					"The string '" + line.getCurrentString() + 
-					"' (length " + line.getCurrentLength() + ") at line " + 
-					line.getLineNumber() + " has more chars than the defined for the last field " + 
-					getFieldInfo().getName() + " (" + fieldLength + "). " +
-					"You can use the @FixedLengthRecord(fixedMode=FixedMode.AllowMoreChars) to avoid this problem.");
-		}
-		else {
+			throw new WrongLenthException(getFieldInfo() , line.getCurrentString(), fieldLength, line.getCurrentLength(), line.getLineNumber(), getFieldInfo().getName() );
+			}			
+		}else if (isLast() && line.getCurrentLength() > fieldLength && fixedMode != FixedMode.AllowMoreChars && fixedMode != FixedMode.AllowVariableLength) {
+			throw new WrongLenthException(getFieldInfo(), line.getCurrentString(), fieldLength, line.getCurrentLength(), line.getLineNumber(), getFieldInfo().getName() );
+		}else{
 			res = new ExtractedInfo(line, line.getCurrentPos() + fieldLength);
 		}
 

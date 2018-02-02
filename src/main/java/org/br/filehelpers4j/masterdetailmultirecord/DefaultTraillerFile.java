@@ -1,7 +1,7 @@
 /*
  * TraillerFile.java
  *
- * Copyright (C) 2007 Felipe Gonçalves Coury <felipe.coury@gmail.com>
+ * Copyright (C) 2007 Atila Augusto dos Santos - <atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,6 +24,6 @@ import org.br.filehelpers4j.masterdetail.RecordAction;
 import org.br.filehelpers4j.masterdetail.SelectorString;
 
 @Seletor(token="CMPFIM", type=RecordAction.TraillerFile, seletorString=SelectorString.Contains)
-public class TraillerFile {
+public class DefaultTraillerFile {
 
 }

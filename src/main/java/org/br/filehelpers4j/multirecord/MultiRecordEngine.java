@@ -1,7 +1,7 @@
 /*
  * MultiRecordEngine.java
  *
- * Copyright (C) 2007 Felipe Gonçalves Coury <felipe.coury@gmail.com>
+ * Copyright (C) 2007 Atila Augusto dos Santos - <atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -102,7 +102,6 @@ public class MultiRecordEngine {
 		BufferedReader reader = new BufferedReader(fileReader);
 		reader.lines().forEach(line -> {
 			selector.forEach((classe, seletor) -> {
-
 				if(line.contains(seletor)) {
 					lineInfo = new LineInfo(line);
 					multiRecordList.add(new RecordInfo<>(classe).strToRecord(lineInfo));

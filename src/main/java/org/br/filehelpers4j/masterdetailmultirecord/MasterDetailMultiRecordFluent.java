@@ -1,7 +1,7 @@
 /*
  * MasterDetailMultiRecordFluent.java
  *
- * Copyright (C) 2007 Felipe Gonçalves Coury <felipe.coury@gmail.com>
+ * Copyright (C) 2007 Atila Augusto dos Santos - <atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,9 +20,7 @@
 package org.br.filehelpers4j.masterdetailmultirecord;
 
 import java.util.List;
-import java.util.Map;
 
-import org.br.filehelpers4j.masterdetail.RecordActionSelector;
 
 public interface MasterDetailMultiRecordFluent {
 

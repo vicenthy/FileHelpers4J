@@ -21,5 +21,5 @@
 package org.br.filehelpers4j.enums;
 
 public enum ConverterKind {
-	None, Date, Boolean, Byte, Int, Float, Double; 
+	None, Date, Boolean, Byte, Integer, Float, Double, BigDecimal, Custom; 
 }

@@ -82,7 +82,7 @@ public class GeradorDirfTest {
 	@Test
 	public void lerArquivoDirf() {
 		try {
-			result = engine.readFile(BASEDIR + ARQUIVO);
+			result = engine.readFile(BASEDIR + ARQUIVO);	
 			assertEquals(3, result.keySet().size());
 			assertEquals(3, result.values().size());
 
@@ -204,10 +204,7 @@ public class GeradorDirfTest {
 		decpj.setIndicadorDePlanoPrivadoDeAssistenciaASaude("N");
 		decpj.setIndicadorEntidadeCapitalSocialSujeitoAVoto("N");
 		decpj.setIndicadorSituacaoEspecialDaDeclaracao("N");
-
-		
 		idrec.setCodigoDeReceita("0558");
-		
 		fimdirf.setIdentificadorDoRegistro("FIMDirf");
 	}
 	

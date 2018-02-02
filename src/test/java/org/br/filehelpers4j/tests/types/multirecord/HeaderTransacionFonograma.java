@@ -1,5 +1,5 @@
 /*
- * TraillerFonograma.java
+ * HeaderFonograma.java
  *
  * Copyright (C) 2007 Atila Augusto dos Santos - <atila.sistemas@gmail.com>
  * 
@@ -24,29 +24,38 @@ import org.br.filehelpers4j.annotations.FixedLengthRecord;
 import org.br.filehelpers4j.annotations.Seletor;
 import org.br.filehelpers4j.masterdetail.RecordAction;
 
-@Seletor(token="9FON", type=RecordAction.TraillerTransaction)
+@Seletor(token="0FON", type=RecordAction.HeaderTransaction)
 @FixedLengthRecord
-public class TraillerFonograma {
-	
+public class HeaderTransacionFonograma {
+
 	
 	
 	@FieldFixedLength(3)
 	private String typeRegistre;
 	@FieldFixedLength(1)
 	private Integer registre;
-	@FieldFixedLength(4)
+	@FieldFixedLength(9)
 	private String sufix;
 	
 	
 	
-	
-	public TraillerFonograma() {
-		// TODO Auto-generated constructor stub
+	public HeaderTransacionFonograma() {
+
+
 	}
 	
 	
 	
 	
+	@Override
+	public String toString() {
+		return "HeaderTransacionFonograma [typeRegistre=" + typeRegistre + ", registre=" + registre + ", sufix=" + sufix
+				+ "]";
+	}
+
+
+
+
 	public String getTypeRegistre() {
 		return typeRegistre;
 	}
@@ -66,14 +75,14 @@ public class TraillerFonograma {
 		this.sufix = sufix;
 	}
 
-
-
-
-	@Override
-	public String toString() {
-		return "TraillerFonograma [typeRegistre=" + typeRegistre + ", registre=" + registre + ", sufix=" + sufix + "]";
-	}
-
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
