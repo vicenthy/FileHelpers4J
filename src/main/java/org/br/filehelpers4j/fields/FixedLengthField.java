@@ -26,6 +26,7 @@ import org.br.filehelpers4j.core.ExtractedInfo;
 import org.br.filehelpers4j.engines.LineInfo;
 import org.br.filehelpers4j.enums.AlignMode;
 import org.br.filehelpers4j.enums.FixedMode;
+import org.br.filehelpers4j.exceptions.WrongLenthException;
 import org.br.filehelpers4j.helpers.StringHelper;
 
 public class FixedLengthField extends FieldBase {

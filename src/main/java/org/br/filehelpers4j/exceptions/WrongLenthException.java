@@ -1,4 +1,4 @@
-package org.br.filehelpers4j.fields;
+package org.br.filehelpers4j.exceptions;
 
 import java.lang.reflect.Field;
 

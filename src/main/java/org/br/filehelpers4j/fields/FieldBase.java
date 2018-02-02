@@ -30,6 +30,7 @@ import org.br.filehelpers4j.converters.ConverterBase;
 import org.br.filehelpers4j.core.ExtractedInfo;
 import org.br.filehelpers4j.engines.LineInfo;
 import org.br.filehelpers4j.enums.TrimMode;
+import org.br.filehelpers4j.exceptions.WrongLenthException;
 import org.br.filehelpers4j.helpers.StringHelper;
 
 public abstract class FieldBase {
