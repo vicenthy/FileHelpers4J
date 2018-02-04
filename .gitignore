@@ -1,27 +1,65 @@
-bin
-target
-.settings
-.DS_Store
-TEST-*.txt
-TESTS-TestSuites.xml
-dist
-# Compiled class file
+# Compiled source #
+###################
 *.class
+classes
 
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
 *.jar
 *.war
 *.ear
 *.zip
+*.tar
 *.tar.gz
 *.rar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+
+# OS generated files #
+######################
+.DS_Store*
+
+# Gradle Files #
+################
+.gradle
+
+# Build output directies
+/target
+*/target
+/build
+*/build
+.m2
+/bin
+*/bin
+dist
+
+# IntelliJ specific files/directories
+out
+.idea
+*.ipr
+*.iws
+*.iml
+atlassian-ide-plugin.xml
+
+# Eclipse specific files/directories
+.classpath
+.project
+.settings
+.metadata
+
+# NetBeans specific files/directories
+.nbattrs
+
+# Cloud9 IDE
+.c9
+
+# Others
+TEST-*.txt
+TESTS-TestSuites.xml
+
 
