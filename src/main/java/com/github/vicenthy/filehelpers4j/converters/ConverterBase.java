@@ -20,11 +20,7 @@
 
 package com.github.vicenthy.filehelpers4j.converters;
 
-/**
- * This is the base class for all converters.
- * 
- * @author Felipe Gon�alves Coury <felipe.coury@gmail.com>
- */
+
 public abstract class ConverterBase {
 	private static String defaultDateTimeFormat = "ddMMyyyy";
 

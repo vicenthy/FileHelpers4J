@@ -46,13 +46,7 @@ import com.github.vicenthy.filehelpers4j.helpers.StringHelper;
 import com.github.vicenthy.filehelpers4j.interfaces.NotifyRead;
 import com.github.vicenthy.filehelpers4j.interfaces.NotifyWrite;
 
-/**
- * Information about one record of information. Keep field types and its values
- * and settings for importing/exporting from this records.
- *  
- * @author Felipe Gon�alves Coury <felipe.coury@gmail.com>
- * @param <T> Type of the record
- */
+
 public final class RecordInfo<T> {
 	private FieldBase[] fields;
 	private final Class<T> recordClass;

@@ -25,11 +25,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * This annotation identifies that the records on the file are delimited.
- * 
- * @author Felipe Gon�alves Coury <felipe.coury@gmail.com>
- */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface DelimitedRecord {

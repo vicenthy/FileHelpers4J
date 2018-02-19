@@ -38,14 +38,7 @@ import com.github.vicenthy.filehelpers4j.engines.LineInfo;
 import com.github.vicenthy.filehelpers4j.helpers.ProgressHelper;
 import com.github.vicenthy.filehelpers4j.helpers.StringHelper;
 
-/**
- * Handles flat files with master-detail information
- * 
- * @author Felipe G. Coury <felipe.coury@gmail.com>
- *
- * @param <MT> Master Type
- * @param <DT> Detail Type
- */
+
 public class MasterDetailEngine<MT, DT> extends EngineBase<DT> {
 
 	@SuppressWarnings("unused")

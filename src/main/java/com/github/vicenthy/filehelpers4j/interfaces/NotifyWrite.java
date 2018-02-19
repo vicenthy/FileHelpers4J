@@ -22,11 +22,7 @@ package com.github.vicenthy.filehelpers4j.interfaces;
 
 import com.github.vicenthy.filehelpers4j.engines.EngineBase;
 
-/**
- * @author Robert Eccardt
- *
- * @param <T>
- */
+
 public interface NotifyWrite<T> {
 	public void beforeWrite(EngineBase<T> engine);
 }
