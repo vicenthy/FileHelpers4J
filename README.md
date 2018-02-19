@@ -1,10 +1,11 @@
 # FileHelpers4J
 FileHelpers4J is a library that automates the tedious task of parsing and creating structured text files. It handles fixed width or delimited files with Java annotations sweetness 
-## Getting Started
-You can start here [JFileHelpers](https://github.com/fcoury/jfilehelpers)
 ### Prerequisites
 
 java 8
+
+## Getting Started
+You can start here [JFileHelpers](https://github.com/fcoury/jfilehelpers)
 
 ## So what's code like? ##
 
@@ -242,7 +243,6 @@ public class OrdersVerticalBar {
 ```
 
 
-
 ## Running the tests
 
 Explain how to run the automated tests for this system
@@ -283,7 +283,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Atila Augusto** - *Initial work* - [PurpleBooth](https://github.com/vicenthy)
+Project based [JFileHelpers](https://github.com/fcoury/jfilehelpers)
 
 See also the list of [contributors](https://github.com/vicenthy/FileHelpers4J/graphs/contributors) who participated in this project.
 

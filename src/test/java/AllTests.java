@@ -19,14 +19,14 @@
  */
 
 
-import org.br.filehelpers4j.tests.annotations.IgnoreTest;
-import org.br.filehelpers4j.tests.callbacks.EventsTest;
-import org.br.filehelpers4j.tests.callbacks.NotifiersTest;
-import org.br.filehelpers4j.tests.callbacks.ProgressTest;
-import org.br.filehelpers4j.tests.converters.DateFormatTest;
-import org.br.filehelpers4j.tests.converters.DecimalNumbersTest;
-import org.br.filehelpers4j.tests.converters.EnumConverterTest;
-import org.br.filehelpers4j.tests.masterdetail.MasterDetailTest;
+import com.github.vicenthy.filehelpers4j.tests.annotations.IgnoreTest;
+import com.github.vicenthy.filehelpers4j.tests.callbacks.EventsTest;
+import com.github.vicenthy.filehelpers4j.tests.callbacks.NotifiersTest;
+import com.github.vicenthy.filehelpers4j.tests.callbacks.ProgressTest;
+import com.github.vicenthy.filehelpers4j.tests.converters.DateFormatTest;
+import com.github.vicenthy.filehelpers4j.tests.converters.DecimalNumbersTest;
+import com.github.vicenthy.filehelpers4j.tests.converters.EnumConverterTest;
+import com.github.vicenthy.filehelpers4j.tests.masterdetail.MasterDetailTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
