@@ -27,7 +27,8 @@
 		<connection>scm:git:git://github.com/vicenthy/FileHelpers4J</connection>
 		<developerConnection>scm:git:git@github.com:vicenthy/FileHelpers4J.git</developerConnection>
 		<url>https://github.com/vicenthy/FileHelpers4J</url>
-	</scm>
+	  <tag>FileHelpers4J-0.0.1</tag>
+  </scm>
 
 	<licenses>
 		<license>
@@ -79,8 +80,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
 				<configuration>
 					<pushChanges>false</pushChanges>
+					<checkModificationExcludes>
+						<checkModificationExclude>pom.xml</checkModificationExclude>
+					</checkModificationExcludes>
 				</configuration>
 			</plugin>
 
