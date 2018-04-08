@@ -110,12 +110,6 @@ public class MasterDetailMultiRecordTest extends TestCase {
 		assertEquals(3, result.get(result.keySet().toArray()[3]).size());
 		assertEquals(3, result.get(result.keySet().toArray()[4]).size());
 		assertEquals(13,result.get(result.keySet().toArray()[5]).size());
-		
-	System.out.println(engine.getTraillerTransaction(result.keySet().toArray()[5], TraillerFonograma.class));
-	System.out.println(engine.getHeaderTransaction(result.keySet().toArray()[5], HeaderTransacionFonograma.class));
-	
-		
-		
 	}
 
 	
@@ -126,10 +120,6 @@ public class MasterDetailMultiRecordTest extends TestCase {
 		assertEquals(7, result.keySet().size());
 		assertEquals(6,result.get(result.keySet().toArray()[6]).size());
 		assertEquals(12,result.get(result.keySet().toArray()[5]).size());
-		result.get(result.keySet().toArray()[5]).forEach(a -> {
-			System.out.println(a);
-		});
-		
 	}
 	
 	

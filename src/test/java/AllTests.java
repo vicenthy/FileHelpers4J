@@ -35,7 +35,7 @@ public class AllTests {
 
 	public static Test suite() {
 		TestSuite suite = new TestSuite(
-				"Test for org.coury.jfilehelpers.tests.converters");
+				"Test for com.github.vicenthy.filehelper4j.tests.converters");
 		//$JUnit-BEGIN$
 		suite.addTestSuite(IgnoreTest.class);
 		suite.addTestSuite(EnumConverterTest.class);

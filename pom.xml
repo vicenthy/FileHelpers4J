@@ -1,9 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.vicenthy.filehelpers4j</groupId>
 	<artifactId>FileHelpers4J</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>FileHelpers4J</name>
 	<url>https://vicenthy.github.io/FileHelpers4J</url>
@@ -27,8 +29,8 @@
 		<connection>scm:git:git://github.com/vicenthy/FileHelpers4J</connection>
 		<developerConnection>scm:git:git@github.com:vicenthy/FileHelpers4J.git</developerConnection>
 		<url>https://github.com/vicenthy/FileHelpers4J</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<licenses>
 		<license>
@@ -80,7 +82,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.3</version>
+				<version>2.5.3</version><!--$NO-MVN-MAN-VER$ -->
 				<configuration>
 					<pushChanges>false</pushChanges>
 					<checkModificationExcludes>

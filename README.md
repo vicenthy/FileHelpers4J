@@ -1,11 +1,18 @@
 # FileHelpers4J
 FileHelpers4J is a library that automates the tedious task of parsing and creating structured text files. It handles fixed width or delimited files with Java annotations sweetness 
 ### Prerequisites
-
 java 8
 
 ## Getting Started
-You can start here [JFileHelpers](https://github.com/fcoury/jfilehelpers)
+
+maven repository
+
+<dependency>
+  <groupId>com.github.vicenthy.filehelpers4j</groupId>
+  <artifactId>FileHelpers4J</artifactId>
+  <version>0.0.1</version>
+</dependency>
+
 
 ## So what's code like? ##
 

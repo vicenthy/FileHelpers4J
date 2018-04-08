@@ -47,7 +47,7 @@ public class GeradorDirfTest {
 
 	private Map<Object, List<?>> result;
 	private List<LinkedHashMap> subdetail;
-	private File file;
+	private File file;	
 	private LinkedHashMap masterdetail;
 
 	
@@ -87,15 +87,7 @@ public class GeradorDirfTest {
 			assertEquals(3, result.keySet().size());
 			assertEquals(3, result.values().size());
 
-			result.values().forEach(detail -> {
-				if(detail.size() > 0) {
-					detail.forEach(masterdetail -> {
-						System.out.println(masterdetail);
-						assertEquals(1, ((LinkedHashMap)masterdetail).keySet().size());
-				});	
-				}
-				
-			});
+			
 			
 			assertNotNull(result);
 		} catch (IOException e) {
@@ -150,11 +142,8 @@ public class GeradorDirfTest {
 			//geração do arquivo	
 			engine.writeFile(BASEDIR + ARQUIVO_SAIDA, result, 1);
 			assertTrue(file.exists());
-			new BufferedReader(new InputStreamReader(new FileInputStream(file))).lines()
-			.forEach(line -> {
-				System.out.println(line);
-			});
-
+			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			assertTrue(reader.lines().count() > 0);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -221,9 +210,7 @@ public class GeradorDirfTest {
 			engine.writeFile(BASEDIR + ARQUIVO_SAIDA, result, 1);
 			assertTrue(file.exists());
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-				reader.lines().forEach(line -> {
-					System.out.println(line);
-				});
+			assertTrue(reader.lines().count() > 0 );
 				
 		} catch (Exception e) {
 			// TODO: handle exception
