@@ -21,8 +21,8 @@
 package com.github.vicenthy.filehelpers4j.helpers;
 
 import java.io.IOException;
-
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.MultilineRecursiveToStringStyle;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import com.github.vicenthy.filehelpers4j.core.ExtractedInfo;
 import com.github.vicenthy.filehelpers4j.engines.LineInfo;
@@ -49,8 +49,7 @@ public class StringHelper {
 	}
 
 	private static String getToString(Object o) throws ClassNotFoundException {
-		Class.forName("org.apache.commons.lang.builder.ToStringBuilder");
-		return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(o, ToStringStyle.MULTI_LINE_STYLE);
+		return new ReflectionToStringBuilder(o, new MultilineRecursiveToStringStyle()).toString();
 	}
 
 	public static void createQuotedString(StringBuffer sb, String source, char quoteChar) {

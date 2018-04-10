@@ -22,6 +22,8 @@ package com.github.vicenthy.filehelpers4j.masterdetailmultirecord;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,11 +31,14 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -48,7 +53,7 @@ import com.github.vicenthy.filehelpers4j.events.BeforeWriteRecordHandler;
 import com.github.vicenthy.filehelpers4j.helpers.StringHelper;
 import com.github.vicenthy.filehelpers4j.masterdetail.RecordAction;
 
-public class MasterDetailMultiRecordEngine implements Serializable{
+public class MasterDetailMultiRecordEngine implements Serializable, Iterable<Map<Object, List<?>>>{
 
 	/**
 	 * 
@@ -73,6 +78,8 @@ public class MasterDetailMultiRecordEngine implements Serializable{
 	private AfterWriteRecordHandler<?> afterWriteRecordHandler;
 	private Object footer;
 	private Object header;
+	private String fileName;
+	private Scanner myScanner;
 
 	public MasterDetailMultiRecordEngine(MasterDetailMultiRecordFluent fluent) {
 		this.fluent = fluent;
@@ -311,18 +318,85 @@ public class MasterDetailMultiRecordEngine implements Serializable{
 	}
 	
 	
-	public Stream<Entry<Object, List<?>>> readFileAsAStreamApi(String fileName) throws IOException {
-		Map<Object, List<?>> result;
-		FileReader fr = null;
+	public Scanner getScanner(String fileName) throws FileNotFoundException {
+		FileInputStream inputStream = new FileInputStream(fileName);
+		Scanner sc = new Scanner(inputStream, "UTF-8");
+		return sc;
+	}
+	
+	public Map<Object, List<?>> readFileAsScannerApi(String fileName) throws IOException {
+		init();
+		FileInputStream inputStream = null;
+		Scanner sc = null;
+
 		try {
-			fr = new FileReader(new File(fileName));
-			result = readStream(fr);
+			inputStream = new FileInputStream(fileName);
+			sc = new Scanner(inputStream, "UTF-8");
+			 while (sc.hasNextLine()) {
+			        String line = sc.nextLine();
+			        RecordAction action = RecordAction.Skip;
+					Class<?> entry = checkRegisterType(line);
+					if (entry != null) {
+						action = getCurrentRecorAction(entry);
+					}
+					switch (action) {
+					case HeaderFile:
+						verifyHeaderOrFooter(line);
+						break;
+					case HeaderTransaction:
+						processHeaderTransaction(line, entry);
+						break;
+					case Master:
+						finallyRegisterMasterDetail();
+						finallyRegister();
+						processMaster(line, entry);
+						break;
+					case MasterDetail:
+						finallyRegisterMasterDetail();
+						processMasterDetail(line, entry);
+						break;
+					case SubDetail:
+						processSubDetail(line, entry);
+						break;
+					case Detail:
+						processDetail(line, entry);
+						break;
+					case TraillerTransaction:
+						processTraillerTransaction(line, entry);
+						break;
+					case Skip:
+						processSkip(line, entry);
+						break;
+					case TraillerFile:
+						finallyRegisterMasterDetail();
+						finallyRegister();
+						verifyHeaderOrFooter(line);
+						break;
+					default:
+						break;
+					}
+			    }
+			 
+			    if (sc.ioException() != null) {
+			        throw sc.ioException();
+			    }
+			
+			
 		} finally {
-			if (fr != null) {
-				fr.close();
+
+			if (inputStream != null) {
+				inputStream.close();
+			}
+			if (sc != null) {
+				sc.close();
 			}
 		}
-		return result.entrySet().stream();
+	    
+	    
+	    return masterDetailMultiRecod;
+		
+		
+
 	}
 
 	public Map<Object, List<?>> readResource(String fileName) throws IOException {
@@ -475,6 +549,82 @@ public class MasterDetailMultiRecordEngine implements Serializable{
 	public <T> T getHeaderTransaction(Object master, Class<T> klass) {
 		return  (T) headerTransactions.get(master);
 	}
+
+	@Override
+	public  Iterator<Map<Object, List<?>>> iterator() {
+		try {
+			myScanner = getScanner(getFileName());
+			init();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new Iterator<Map<Object, List<?>>>() {
+			@Override
+			public boolean hasNext() {
+				return myScanner.hasNext();
+			}
+
+			@Override
+			public Map<Object, List<?>> next() {
+		        String line = myScanner.nextLine();
+		        RecordAction action = RecordAction.Skip;
+				Class<?> entry = checkRegisterType(line);
+				if (entry != null) {
+					action = getCurrentRecorAction(entry);
+				}
+				switch (action) {
+				case HeaderFile:
+					verifyHeaderOrFooter(line);
+					break;
+				case HeaderTransaction:
+					processHeaderTransaction(line, entry);
+					break;
+				case Master:
+					finallyRegisterMasterDetail();
+					finallyRegister();
+					processMaster(line, entry);
+					break;
+				case MasterDetail:
+					finallyRegisterMasterDetail();
+					processMasterDetail(line, entry);
+					break;
+				case SubDetail:
+					processSubDetail(line, entry);
+					break;
+				case Detail:
+					processDetail(line, entry);
+					break;
+				case TraillerTransaction:
+					processTraillerTransaction(line, entry);
+					break;
+				case Skip:
+					processSkip(line, entry);
+					break;
+				case TraillerFile:
+					finallyRegisterMasterDetail();
+					finallyRegister();
+					verifyHeaderOrFooter(line);
+					break;
+				default:
+					break;
+					
+				}
+				return masterDetailMultiRecod;
+			}
+			
+			
+		};
+	}
 	
+	
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	
+	public String getFileName() {
+		return fileName;
+	}
 	
 }

@@ -30,6 +30,7 @@ import com.github.vicenthy.filehelpers4j.converters.ConverterBase;
 import com.github.vicenthy.filehelpers4j.core.ExtractedInfo;
 import com.github.vicenthy.filehelpers4j.engines.LineInfo;
 import com.github.vicenthy.filehelpers4j.enums.TrimMode;
+import com.github.vicenthy.filehelpers4j.exceptions.BadUsageException;
 import com.github.vicenthy.filehelpers4j.exceptions.WrongLenthException;
 import com.github.vicenthy.filehelpers4j.helpers.StringHelper;
 
@@ -71,24 +72,23 @@ public abstract class FieldBase {
 		}		
 	}
 	
-	public Object extractValue(LineInfo line) throws IOException {
+	public Object extractValue(LineInfo line) throws BadUsageException {
 		if (this.inNewLine) {
 			if (!line.isEmptyFromPos()) {
-//				throw new BadUsageException("Text '" + line.CurrentString +
-//                        "' found before the new line of the field: " + mFieldInfo.Name +
-//                        " (this is not allowed when you use [FieldInNewLine])");
-				throw new RuntimeException("Text '" + line.getCurrentString() +
+				throw new BadUsageException("Text '" + line.getCurrentString() +
 	              "' found before the new line of the field: " + fieldInfo.getName() +
-	              " (this is not allowed when you use [FieldInNewLine])");
+	              " (this is not allowed when you use [FieldInNewLine]) in Class " + fieldInfo.getDeclaringClass().getSimpleName());
 			}
 
-			line.reload(line.getReader().readNextLine());
+			try {
+				line.reload(line.getReader().readNextLine());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 				
 			if (line.getLineStr() == null) {
-//				throw new BadUsageException("End of stream found parsing the field " + fieldInfo.getName() +
-//                ". Please check the class record.");
-				throw new RuntimeException("End of stream found parsing the field " + fieldInfo.getName() +
-                ". Please check the class record.");
+				throw new BadUsageException("End of stream found parsing the field " + fieldInfo.getName() +
+                ". Please check the class record in Class " + fieldInfo.getDeclaringClass().getSimpleName());
 			}
 		}
 		
@@ -137,7 +137,7 @@ public abstract class FieldBase {
 		return val;
 	}
 	
-	protected abstract ExtractedInfo extractFieldString(LineInfo line) throws WrongLenthException;
+	protected abstract ExtractedInfo extractFieldString(LineInfo line) throws WrongLenthException, BadUsageException;
 	
 	protected abstract void createFieldString(StringBuffer sb, Object fieldValue);
 	

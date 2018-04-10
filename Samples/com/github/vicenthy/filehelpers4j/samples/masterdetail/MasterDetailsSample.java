@@ -1,7 +1,7 @@
 /*
  * MasterDetailsSample.java
  *
- * Copyright (C) 2007 Felipe Gon�alves Coury <felipe.coury@gmail.com>
+ * Copyright (C) 2018 Atila Augusto atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

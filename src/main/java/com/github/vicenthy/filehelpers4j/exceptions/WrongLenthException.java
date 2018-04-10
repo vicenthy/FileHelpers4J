@@ -14,6 +14,7 @@ public class WrongLenthException extends Exception {
 	private String name;
 	private int fieldLength;
 	private Field field;
+	private String msgError;
 	
 	public WrongLenthException(Field field, String currentString, int currentLength, int lineNumber, int fieldLength , String name) {
 		// TODO Auto-generated constructor stub
@@ -25,6 +26,12 @@ public class WrongLenthException extends Exception {
 		this.field = field;
 	}
 
+	
+	
+	public WrongLenthException(String msgError) {
+		this.msgError = msgError;
+	}
+	
 	@Override
 	public String getMessage() {
 		return "The string '" + currentString + 
@@ -35,5 +42,9 @@ public class WrongLenthException extends Exception {
 	}
 	
 	
+
 	
+	public String getMsgError() {
+		return msgError;
+	}
 }

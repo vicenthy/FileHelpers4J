@@ -1,7 +1,7 @@
 /*
  * TestFixed.java
  *
- * Copyright (C) 2007 Felipe Gon�alves Coury <felipe.coury@gmail.com>
+ * Copyright (C)  2018 Atila Augusto atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,7 +26,7 @@ import java.util.List;
 
 import com.github.vicenthy.filehelpers4j.engines.FileHelperEngine;
 
-public class TestFixed {
+public class TestFixedString {
 	public static void main(String[] args) throws IOException {
 		FileHelperEngine<Customer> engine = new FileHelperEngine<Customer>(Customer.class);	
 		List<Customer> customers = new ArrayList<Customer>();
@@ -41,6 +41,6 @@ public class TestFixed {
 		for (Customer c : customers) {
 			System.out.println(c);
 		}
-		engine.writeFile("customers-fixed-out.txt", customers);
+		System.out.println(engine.getRecordsAsString(customers));
 	}
 }

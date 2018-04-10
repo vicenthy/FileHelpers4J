@@ -354,6 +354,7 @@ public class FileHelperEngine<T> extends EngineBase<T> implements Iterable<T> {
     }
 
     public Iterator<T> iterator() {
+    	
         return new Iterator<T>() {
 
 			@Override

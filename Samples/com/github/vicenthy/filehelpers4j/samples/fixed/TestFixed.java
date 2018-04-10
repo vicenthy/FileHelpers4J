@@ -1,7 +1,7 @@
 /*
- * TestDelimited.java
+ * TestFixed.java
  *
- * Copyright (C) 2007 Felipe Gon�alves Coury <felipe.coury@gmail.com>
+ * Copyright (C)  2018 Atila Augusto atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,22 +18,21 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package com.github.vicenthy.filehelpers4j.samples.delimited;
+package com.github.vicenthy.filehelpers4j.samples.fixed;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.github.vicenthy.filehelpers4j.engines.FileHelperEngine;
-import com.github.vicenthy.filehelpers4j.samples.delimited.Customer;
 
-public class TestDelimited {
+public class TestFixed {
 	public static void main(String[] args) throws IOException {
 		FileHelperEngine<Customer> engine = new FileHelperEngine<Customer>(Customer.class);	
 		List<Customer> customers = new ArrayList<Customer>();
 		
 		if (args.length < 1) {
-			customers = engine.readResource("/samples/customers-delimited.txt");
+			customers = engine.readResource("/samples/customers-fixed.txt");
 		}
 		else {
 			customers = engine.readFile(args[0]);
@@ -42,7 +41,6 @@ public class TestDelimited {
 		for (Customer c : customers) {
 			System.out.println(c);
 		}
-		
-		engine.writeFile("customers-delimited-out.txt", customers);
+		engine.writeFile("customers-fixed-out.txt", customers);
 	}
 }

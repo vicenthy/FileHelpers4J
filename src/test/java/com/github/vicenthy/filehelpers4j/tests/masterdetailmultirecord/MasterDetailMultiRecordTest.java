@@ -23,8 +23,12 @@ package com.github.vicenthy.filehelpers4j.tests.masterdetailmultirecord;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.github.vicenthy.filehelpers4j.masterdetail.RecordAction;
 import com.github.vicenthy.filehelpers4j.masterdetail.RecordActionSelector;
@@ -101,7 +105,8 @@ public class MasterDetailMultiRecordTest extends TestCase {
 	}
 	
 	public void testLeituraArquivoDeLayoutPadrao() throws Exception {
-		result = engine.readFile(BASEDIR + "masterdetailmultirecord-example.txt");
+		//result = engine.readFile(BASEDIR + "masterdetailmultirecord-example.txt");
+		result = engine.readFileAsScannerApi(BASEDIR + "masterdetailmultirecord-example.txt");
 		//quantidade de registros do tipo master
 		assertEquals(6, result.keySet().size());
 		assertEquals(2, result.get(result.keySet().toArray()[0]).size());
@@ -110,6 +115,19 @@ public class MasterDetailMultiRecordTest extends TestCase {
 		assertEquals(3, result.get(result.keySet().toArray()[3]).size());
 		assertEquals(3, result.get(result.keySet().toArray()[4]).size());
 		assertEquals(13,result.get(result.keySet().toArray()[5]).size());
+		
+		engine.setFileName(BASEDIR + "masterdetailmultirecord-example.txt");
+		
+		Iterator<Map<Object, List<?>>> it = engine.iterator();
+		
+		while (it.hasNext()) {
+				it.next().forEach((master, detail) -> {
+						System.out.println(master);
+						System.out.println(detail);
+				});
+		}
+
+		
 	}
 
 	
@@ -118,7 +136,7 @@ public class MasterDetailMultiRecordTest extends TestCase {
 		//quantidade de registros do tipo master
 		assertTrue(result.size() > 0);
 		assertEquals(7, result.keySet().size());
-		assertEquals(6,result.get(result.keySet().toArray()[6]).size());
+		assertEquals(6,result.get(result .keySet().toArray()[6]).size());
 		assertEquals(12,result.get(result.keySet().toArray()[5]).size());
 	}
 	

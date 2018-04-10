@@ -26,6 +26,7 @@ import com.github.vicenthy.filehelpers4j.core.ExtractedInfo;
 import com.github.vicenthy.filehelpers4j.engines.LineInfo;
 import com.github.vicenthy.filehelpers4j.enums.AlignMode;
 import com.github.vicenthy.filehelpers4j.enums.FixedMode;
+import com.github.vicenthy.filehelpers4j.exceptions.BadUsageException;
 import com.github.vicenthy.filehelpers4j.exceptions.WrongLenthException;
 import com.github.vicenthy.filehelpers4j.helpers.StringHelper;
 
@@ -43,16 +44,16 @@ public class FixedLengthField extends FieldBase {
 	}
 	
 	@Override
-	protected ExtractedInfo extractFieldString(LineInfo line) throws WrongLenthException {
+	protected ExtractedInfo extractFieldString(LineInfo line) throws WrongLenthException, BadUsageException {
 		if (line.getCurrentLength() == 0) {
 			if (isOptional())
 				return ExtractedInfo.Empty;
 			else
-				throw new IllegalArgumentException(
+				throw new BadUsageException(
 						"End Of Line found processing the field: " + 
 						getFieldInfo().getName() + " at line " + 
 						line.getLineNumber() + ". " +
-						"(You need to mark it as @FieldOptional if you want to avoid this exception)");
+						"(You need to mark it as @FieldOptional if you want to avoid this exception) in Class " + getFieldInfo().getDeclaringClass().getSimpleName());
 		}
 		ExtractedInfo res;
 

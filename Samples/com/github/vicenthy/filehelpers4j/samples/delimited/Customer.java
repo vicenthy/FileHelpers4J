@@ -1,7 +1,7 @@
 /*
  * Customer.java
  *
- * Copyright (C) 2007 Felipe Gon�alves Coury <felipe.coury@gmail.com>
+ * Copyright (C) 2007 Atila Augusto<atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package com.github.vicenthy.filehelpers4j.samples.delimited.open;
+package com.github.vicenthy.filehelpers4j.samples.delimited;
 
 import java.util.Date;
 
@@ -35,12 +35,7 @@ public class Customer {
 	
 	@FieldConverter(converter = ConverterKind.Date, format = "dd-MM-yyyy")
 	private Date addedDate;
-
-    public String getName() {
-        return name;
-    }	
-        
-        
+	
 	@Override
 	public String toString() {
 		String l = System.getProperty("line.separator");
@@ -52,4 +47,40 @@ public class Customer {
 		b.append("   addedDate = " + addedDate).append(l);
 		return StringHelper.toStringBuilder(this, b.toString());
 	}
+
+	
+	
+	public Integer getCustId() {
+		return custId;
+	}
+
+	public void setCustId(Integer custId) {
+		this.custId = custId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	public Date getAddedDate() {
+		return addedDate;
+	}
+
+	public void setAddedDate(Date addedDate) {
+		this.addedDate = addedDate;
+	}
+	
+	
 }

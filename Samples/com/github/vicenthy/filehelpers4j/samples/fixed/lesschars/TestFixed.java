@@ -1,7 +1,7 @@
 /*
- * TestDelimited.java
+ * TestFixed.java
  *
- * Copyright (C) 2007 Felipe Gon�alves Coury <felipe.coury@gmail.com>
+ * Copyright (C) 2018 Atila Augusto atila.sistemas@gmail.com>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,33 +17,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
-package com.github.vicenthy.filehelpers4j.samples.delimited.open;
+package com.github.vicenthy.filehelpers4j.samples.fixed.lesschars;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.github.vicenthy.filehelpers4j.engines.FileHelperEngine;
 
-public class TestDelimitedIterator {
+public class TestFixed {
 	public static void main(String[] args) throws IOException {
-		FileHelperEngine<Customer> engine = new FileHelperEngine<Customer>(
-				Customer.class);
+		FileHelperEngine<Track> engine = new FileHelperEngine<Track>(Track.class);	
+		List<Track> tracks = new ArrayList<Track>();
 		
 		if (args.length < 1) {
-			engine.openResource("/samples/customers-delimited.txt");
-		} else {
-			engine.openFile(args[0]);
+			tracks = engine.readResource("/samples/tracks-fixed.txt");
+		}
+		else {
+			tracks = engine.readFile(args[0]);
 		}
 		
-		int count = 0;
-		for (Customer c : engine) {
-			if ("Felipe Coury".equals(c.getName())) {
-				count++;
-			}
-
+		for (Track t : tracks) {
+			System.out.println(t);
 		}
-		
-		engine.close();
-		System.out.println(count);
 	}
 }

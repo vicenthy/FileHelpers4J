@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,13 +84,22 @@ public class GeradorDirfTest {
 	@Test
 	public void lerArquivoDirf() {
 		try {
-			result = engine.readFile(BASEDIR + ARQUIVO);	
+			result = engine.readFile(BASEDIR + ARQUIVO);
 			assertEquals(3, result.keySet().size());
 			assertEquals(3, result.values().size());
-
-			
-			
 			assertNotNull(result);
+			engine.setFileName(BASEDIR + ARQUIVO);
+		
+			Iterator<Map<Object, List<?>>> it = engine.iterator();
+			
+			while (it.hasNext()) {
+					it.next().forEach((master, detail) -> {
+							System.out.println(master);
+							System.out.println(detail);
+					});
+			}
+			
+		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
