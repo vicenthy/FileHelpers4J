@@ -80,6 +80,8 @@ public class MasterDetailMultiRecordEngine implements Serializable, Iterable<Map
 	private Object header;
 	private String fileName;
 	private Scanner myScanner;
+	private boolean fimRegistro = false;
+
 
 	public MasterDetailMultiRecordEngine(MasterDetailMultiRecordFluent fluent) {
 		this.fluent = fluent;
@@ -231,6 +233,7 @@ public class MasterDetailMultiRecordEngine implements Serializable, Iterable<Map
 	private void finallyRegister() {
 		if (master != null && details.size() > 0) {
 			masterDetailMultiRecod.put(master, details);
+			fimRegistro = true;
 		} else if (master != null) {
 			masterDetailMultiRecod.put(master, new ArrayList<>());
 		}
@@ -554,13 +557,13 @@ public class MasterDetailMultiRecordEngine implements Serializable, Iterable<Map
 	public  Iterator<Map<Object, List<?>>> iterator() {
 		try {
 			myScanner = getScanner(getFileName());
-			init();
-		} catch (FileNotFoundException e) {
+			} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return new Iterator<Map<Object, List<?>>>() {
+		
 			@Override
 			public boolean hasNext() {
 				return myScanner.hasNext();
@@ -568,13 +571,21 @@ public class MasterDetailMultiRecordEngine implements Serializable, Iterable<Map
 
 			@Override
 			public Map<Object, List<?>> next() {
-		        String line = myScanner.nextLine();
+				init();
+				fimRegistro = false;
+		
+				while(myScanner.hasNext() && !fimRegistro ) {
+		      
+				String line = myScanner.nextLine();
 		        RecordAction action = RecordAction.Skip;
 				Class<?> entry = checkRegisterType(line);
+				
 				if (entry != null) {
 					action = getCurrentRecorAction(entry);
 				}
+				
 				switch (action) {
+				
 				case HeaderFile:
 					verifyHeaderOrFooter(line);
 					break;
@@ -610,6 +621,8 @@ public class MasterDetailMultiRecordEngine implements Serializable, Iterable<Map
 				default:
 					break;
 					
+				}
+				
 				}
 				return masterDetailMultiRecod;
 			}
