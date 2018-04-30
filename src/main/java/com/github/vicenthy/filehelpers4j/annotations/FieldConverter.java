@@ -31,5 +31,5 @@ import com.github.vicenthy.filehelpers4j.enums.ConverterKind;
 @Target(ElementType.FIELD)
 public @interface FieldConverter {
 	ConverterKind converter();
-	String format();
+	 String format();
 }
