@@ -6,7 +6,7 @@ import com.github.vicenthy.filehelpers4j.annotations.DelimitedRecord;
 public class DecimalType {
 	public int intField;
 	public float floatField;
-	public Double doubleField;
+	public double doubleField;
 	// added just for C# compatibility
 	public float decimalField;
 }
