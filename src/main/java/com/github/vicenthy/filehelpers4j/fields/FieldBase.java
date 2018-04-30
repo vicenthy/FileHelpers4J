@@ -226,13 +226,13 @@ public abstract class FieldBase {
 		if (fieldInfo.getType().isEnum()) {
 			Object ret = null;
 			try {
-				System.out.println(s);
 				ret = Enum.valueOf((Class<Enum>) fieldInfo.getType(), s); 
 			}
 			catch (IllegalArgumentException e) {
 			}
 			return ret;
 		}
+
 		return s.getClass().cast(fieldInfo.getType());
 	}
 

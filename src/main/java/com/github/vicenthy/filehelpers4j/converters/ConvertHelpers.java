@@ -38,6 +38,10 @@ public class ConvertHelpers {
 			return new IntConverter();
 		case BigDecimal:
 			return new BigDecimalConverter();
+		case Double:
+			return new DoubleConverter();
+		case Float:
+			return new FloatConverter();
 
 		}
 		return null;
@@ -46,17 +50,18 @@ public class ConvertHelpers {
 	public static ConverterBase getDefaultConverter(Field field) {
 		if (field.getType() == String.class) {
 			return null;
-		}
-		else if (field.getType() == Date.class) {
+		}else if (field.getType() == Date.class) {
 			return new DateTimeConverter();
-		}
-		else if (field.getType() == Boolean.class) {
+		}else if (field.getType() == Boolean.class) {
 			return new BooleanConverter();
-		}
-		else if (field.getType() == Integer.class) {
+		}else if (field.getType() == Integer.class) {
 			return new IntConverter();
 		}else if (field.getType() == BigDecimal.class) {
 			return new BigDecimalConverter();
+		}else if (field.getType() == Double.class) {
+			return new DoubleConverter();
+		}else if (field.getType() == Float.class) {
+			return new FloatConverter();
 		}
 		return null;
 	}

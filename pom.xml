@@ -3,7 +3,11 @@
 
 	<groupId>com.github.vicenthy.filehelpers4j</groupId>
 	<artifactId>FileHelpers4J</artifactId>
+<<<<<<< HEAD
 	<version>0.0.1</version>
+=======
+	<version>0.0.3-SNAPSHOT</version>
+>>>>>>> e85aa5c
 	<packaging>jar</packaging>
 	<name>FileHelpers4J</name>
 	<url>https://vicenthy.github.io/FileHelpers4J</url>
