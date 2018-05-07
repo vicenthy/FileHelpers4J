@@ -296,7 +296,7 @@ Project based [JFileHelpers](https://github.com/fcoury/jfilehelpers)
 See also the list of [contributors](https://github.com/vicenthy/FileHelpers4J/graphs/contributors) who participated in this project.
 ## Code of conduct
 
-Code of conduct [Code of conduct](https://github.com/vicenthy/FileHelpers4J/blob/master/code-of-conduct.md)
+[Code of conduct](https://github.com/vicenthy/FileHelpers4J/blob/master/code-of-conduct.md)
 
 ## License
 
