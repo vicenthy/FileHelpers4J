@@ -142,7 +142,9 @@ public class DelimitedField extends FieldBase {
 	@Override
 	protected void createFieldString(StringBuffer sb, Object fieldValue) {
 		String field = super.baseFieldString(fieldValue);
-
+		if(field == null)
+				field = "";
+			
 		boolean hasNewLine = 
 			field.indexOf(StringHelper.NEW_LINE) >= 0;
 

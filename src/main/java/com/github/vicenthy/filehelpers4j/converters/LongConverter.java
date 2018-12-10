@@ -1,19 +1,21 @@
 package com.github.vicenthy.filehelpers4j.converters;
 
-import java.math.BigDecimal;
+public class LongConverter extends ConverterBase{
 
-public class BigDecimalConverter extends ConverterBase{
-
+	
 	@Override
 	public Object stringToField(String from) {
 		if (from != null) {
-			from = from.trim();
+			from = from.trim().replaceAll("\\D", "");
+		}else {
+			return from;
 		}
-		return new BigDecimal(from);
+		return Long.valueOf(from);
 	}
 	
 	@Override
 	public String fieldToString(Object from) {
 		return from.toString();
 	}
+
 }

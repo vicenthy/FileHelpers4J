@@ -22,6 +22,7 @@ package com.github.vicenthy.filehelpers4j.converters;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 import com.github.vicenthy.filehelpers4j.enums.ConverterKind;
@@ -42,14 +43,18 @@ public class ConvertHelpers {
 			return new DoubleConverter();
 		case Float:
 			return new FloatConverter();
-
+		case Long:
+			return new LongConverter();
+		case BigInteger:
+			return new BigIntegerConverter();
+		default:
+			return null;
 		}
-		return null;
 	}
 	
 	public static ConverterBase getDefaultConverter(Field field) {
 		if (field.getType() == String.class) {
-			return null;
+			return new AnyConverter();
 		}else if (field.getType() == Date.class) {
 			return new DateTimeConverter();
 		}else if (field.getType() == Boolean.class) {
@@ -62,6 +67,10 @@ public class ConvertHelpers {
 			return new DoubleConverter();
 		}else if (field.getType() == Float.class) {
 			return new FloatConverter();
+		}else if (field.getType() == Long.class) {
+			return new LongConverter();
+		}else if (field.getType() == BigInteger.class) {
+			return new BigIntegerConverter();
 		}
 		return null;
 	}

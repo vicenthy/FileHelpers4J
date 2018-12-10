@@ -76,6 +76,9 @@ public class FixedLengthField extends FieldBase {
 	@Override
 	protected void createFieldString(StringBuffer sb, Object fieldValue) {
 		String field = super.baseFieldString(fieldValue);
+		if(field == null)
+			field = "";
+
 		field = StringHelper.trimBoth(field, StringHelper.WHITESPACE_CHARS);
 
 		if (field.length() > fieldLength) {

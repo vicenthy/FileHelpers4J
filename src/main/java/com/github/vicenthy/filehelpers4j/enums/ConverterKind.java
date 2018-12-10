@@ -21,5 +21,5 @@
 package com.github.vicenthy.filehelpers4j.enums;
 
 public enum ConverterKind {
-	None, Date, Boolean, Byte, Integer, Float, Double, BigDecimal, Custom; 
+	None, Date, Boolean, Byte, Integer, Float, Double, BigDecimal, Custom, Long, BigInteger; 
 }
