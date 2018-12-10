@@ -290,10 +290,13 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Atila Augusto** - *Initial work* - [PurpleBooth](https://github.com/vicenthy)
+* **Atila Augusto** - *Initial work* - [Atila Augusto](https://github.com/vicenthy)
 Project based [JFileHelpers](https://github.com/fcoury/jfilehelpers)
 
 See also the list of [contributors](https://github.com/vicenthy/FileHelpers4J/graphs/contributors) who participated in this project.
+## Code of conduct
+
+[Code of conduct](https://github.com/vicenthy/FileHelpers4J/blob/master/code-of-conduct.md)
 
 ## License
 
