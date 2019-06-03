@@ -223,6 +223,9 @@ public abstract class FieldBase {
 		if (fieldInfo.getType().getName().equals("float")) {
 			return Float.parseFloat(s);
 		}
+		if (fieldInfo.getType().getName().equals("long")) {
+			return Long.parseLong(s);
+		}
 		if (fieldInfo.getType().isEnum()) {
 			Object ret = null;
 			try {
