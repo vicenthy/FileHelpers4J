@@ -553,6 +553,11 @@ public class MasterDetailMultiRecordEngine implements Serializable, Iterable<Map
 		return  (T) headerTransactions.get(master);
 	}
 
+
+	public Map<Object, Object> getTraillerTransaction(){
+		return this.traillerTransactions;
+	}
+
 	@Override
 	public  Iterator<Map<Object, List<?>>> iterator() {
 		try {
